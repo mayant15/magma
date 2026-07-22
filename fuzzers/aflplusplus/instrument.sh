@@ -8,6 +8,7 @@ set -e
 # - env MAGMA: path to Magma support files
 # - env OUT: path to directory where artifacts are stored
 # - env CFLAGS and CXXFLAGS must be set to link against Magma instrumentation
+# + env HARNESSES: path to directory with custom harnesses (default: unset)
 ##
 
 export CC="$FUZZER/repo/afl-clang-fast"
