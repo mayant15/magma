@@ -24,17 +24,23 @@ mkdir -p "$MONITOR"
 # change working directory to somewhere accessible by the fuzzer and target
 cd "$SHARED"
 
-# prune the seed corpus for any fault-triggering test-cases
-SEEDS="$TARGET/corpus/$PROGRAM"
-if [ ! -d $SEED_DIR ]; then
+# Select seeds
+if [ -z $PROGRAM ]; then
+  SEEDS="$TARGET/corpus/$PROGRAM"
+else
   SEEDS="$TARGET/corpus/default"
-  if [ ! -d $SEED_DIR ]; then
+fi
+
+if [ ! -d $SEEDS ]; then
+  SEEDS="$TARGET/corpus/default"
+  if [ ! -d $SEEDS ]; then
     echo "No program-specific or default seeds exist."
     exit 1
   fi
 fi
 export SEEDS
 
+# prune the seed corpus for any fault-triggering test-cases
 for seed in "$SEEDS"/*; do
     out="$("$MAGMA"/runonce.sh "$seed")"
     code=$?
@@ -52,9 +58,6 @@ if [ ${#seeds[@]} -eq 0 ]; then
     echo "No seeds remaining! Campaign will not be launched."
     exit 1
 fi
-
-echo seeds $seeds
-exit 1
 
 # launch the fuzzer in parallel with the monitor
 rm -f "$MONITOR/tmp"*
