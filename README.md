@@ -25,3 +25,11 @@ aflplusplus_HARNESSES=(custom)
 
 Target build scripts receive the `$HARNESS` environment variable, which is the value set in
 `captainrc` with `<fuzzer>_HARNESSES=(...)`.
+
+### Seeds
+
+This fork adds support for _"default"_ seeds:
+1. First check if `$TARGET/corpus/$PROGRAM` exists. If so, use that.
+1. Otherwise use `$TARGET/corpus/default`.
+
+This is so we don't have to duplicate seeds N times for all N harnesses we might generate.
