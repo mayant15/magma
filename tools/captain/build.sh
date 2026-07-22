@@ -46,6 +46,7 @@ if [ ! -z $HARNESSES ]; then
 fi
 
 set -x
+# TODO(Mayant): Should we pass in GROUP_ID and USER_ID?
 docker build -t "$IMG_NAME" \
     --build-arg fuzzer_name="$FUZZER" \
     --build-arg target_name="$TARGET" \
