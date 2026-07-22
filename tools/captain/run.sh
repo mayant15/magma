@@ -273,7 +273,7 @@ for FUZZER in "${FUZZERS[@]}"; do
             echo_time "Starting campaigns for $PROGRAM $ARGS"
             for ((i=0; i<$REPEAT; i++)); do
                 export NUMWORKERS="$(get_var_or_default $FUZZER 'CAMPAIGN_WORKERS')"
-                # export AFFINITY=$(allocate_workers)
+                export AFFINITY=$(allocate_workers)
                 start_ex &
             done
         done
