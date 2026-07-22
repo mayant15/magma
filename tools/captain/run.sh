@@ -234,6 +234,17 @@ cleanup()
 
 trap cleanup EXIT
 
+get_programs() {
+  if [ -z $HARNESSES ]; then
+    get_var_or_default $FUZZER $TARGET 'PROGRAMS'
+  else
+    FILES=$MAGMA/targets/$TARGET/$HARNESSES/*.c
+    for FILE in ${FILES[@]}; do
+      echo $(basename $FILE .c)
+    done
+  fi
+}
+
 # schedule campaigns
 for FUZZER in "${FUZZERS[@]}"; do
     export FUZZER
@@ -254,7 +265,7 @@ for FUZZER in "${FUZZERS[@]}"; do
             continue
         fi
 
-        PROGRAMS=($(get_var_or_default $FUZZER $TARGET 'PROGRAMS'))
+        PROGRAMS=($(get_programs))
         for PROGRAM in "${PROGRAMS[@]}"; do
             export PROGRAM
             export ARGS="$(get_var_or_default $FUZZER $TARGET $PROGRAM 'ARGS')"
@@ -262,7 +273,7 @@ for FUZZER in "${FUZZERS[@]}"; do
             echo_time "Starting campaigns for $PROGRAM $ARGS"
             for ((i=0; i<$REPEAT; i++)); do
                 export NUMWORKERS="$(get_var_or_default $FUZZER 'CAMPAIGN_WORKERS')"
-                export AFFINITY=$(allocate_workers)
+                # export AFFINITY=$(allocate_workers)
                 start_ex &
             done
         done

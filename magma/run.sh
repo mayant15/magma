@@ -25,7 +25,17 @@ mkdir -p "$MONITOR"
 cd "$SHARED"
 
 # prune the seed corpus for any fault-triggering test-cases
-for seed in "$TARGET/corpus/$PROGRAM"/*; do
+SEEDS="$TARGET/corpus/$PROGRAM"
+if [ ! -d $SEED_DIR ]; then
+  SEEDS="$TARGET/corpus/default"
+  if [ ! -d $SEED_DIR ]; then
+    echo "No program-specific or default seeds exist."
+    exit 1
+  fi
+fi
+export SEEDS
+
+for seed in "$SEEDS"/*; do
     out="$("$MAGMA"/runonce.sh "$seed")"
     code=$?
 
@@ -43,6 +53,8 @@ if [ ${#seeds[@]} -eq 0 ]; then
     exit 1
 fi
 
+echo seeds $seeds
+exit 1
 
 # launch the fuzzer in parallel with the monitor
 rm -f "$MONITOR/tmp"*

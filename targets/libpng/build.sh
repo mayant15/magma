@@ -37,7 +37,7 @@ if [ ! -z "$HARNESSES" ]; then
 
   echo "Building custom harnesses"
   for HARNESS in $HARNESS_DIR/*.c; do
-    NAME=$(basename --suffix .c $HARNESS)
+    NAME=$(basename $HARNESS .c)
     $RAW_CC -I. -c $HARNESS -o "$OUT/$NAME.o"
     $CC "$OUT/$NAME.o" -o "$OUT/$NAME" $LDFLAGS .libs/libpng16.a $LIBS -lz
   done
