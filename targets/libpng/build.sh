@@ -35,11 +35,17 @@ if [ ! -z "$HARNESSES" ]; then
     exit 1
   fi
 
-  echo "Building custom harnesses"
+  SUPPORT="$TARGET/traffic/support"
+  RUNTIME="$OUT/runtime.o"
+  $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
+
   for HARNESS in $HARNESS_DIR/*.c; do
     NAME=$(basename $HARNESS .c)
-    $RAW_CC -I. -c $HARNESS -o "$OUT/$NAME.o"
-    $CC "$OUT/$NAME.o" -o "$OUT/$NAME" $LDFLAGS .libs/libpng16.a $LIBS -lz
+    echo "building $NAME"
+    $RAW_CC -I. -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
+    $CC "$OUT/$NAME.o" "$RUNTIME" .libs/libpng16.a \
+      -o "$OUT/$NAME" \
+      -lz $LDFLAGS $LIBS
   done
 
 else
