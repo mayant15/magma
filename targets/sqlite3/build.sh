@@ -37,3 +37,27 @@ $CC $CFLAGS -I. \
     "$TARGET/repo/test/ossfuzz.c" "./sqlite3.o" \
     -o "$OUT/sqlite3_fuzz" \
     $LDFLAGS $LIBS -pthread -ldl -lm
+
+if [ ! -z "$HARNESSES" ]; then
+  HARNESS_DIR="$TARGET/$HARNESSES"
+  if [ ! -d "$HARNESS_DIR" ]; then
+    echo "harness directory $HARNESS_DIR does not exist."
+    exit 1
+  fi
+
+  RAW_CC="clang"
+
+  SUPPORT="$TARGET/traffic/support"
+  RUNTIME="$OUT/runtime.o"
+  $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
+
+  for HARNESS in $HARNESS_DIR/*.c; do
+    NAME=$(basename $HARNESS .c)
+    echo "building $NAME"
+    $RAW_CC -I. -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
+    $CC "$OUT/$NAME.o" "$RUNTIME" "./sqlite3.o" \
+      -o "$OUT/$NAME" -pthread -ldl -lm \
+      $LDFLAGS $LIBS
+  done
+fi
+
