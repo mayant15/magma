@@ -9,7 +9,7 @@ WORKDIR=./workdir
 REPEAT=1
 
 # [WORKERS]: number of worker threads (default: CPU cores)
-WORKERS=1
+WORKERS=4
 
 # [TIMEOUT]: time to run each campaign. This variable supports one-letter
 # suffixes to indicate duration (s: seconds, m: minutes, h: hours, d: days)
@@ -31,7 +31,7 @@ FUZZERS=(aflplusplus)
 
 # [fuzzer_TARGETS]: an array of target names (from magma/targets/*) to fuzz with
 # `fuzzer` (default: all targets)
+aflplusplus_TARGETS=(libxml2 libtiff libsndfile sqlite3)
 
 # TODO: Should this be an array?
-aflplusplus_TARGETS=(sqlite3)
 aflplusplus_HARNESSES=(traffic)
