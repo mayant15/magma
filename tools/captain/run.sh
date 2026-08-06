@@ -238,6 +238,7 @@ get_programs() {
   if [ -z $HARNESSES ]; then
     get_var_or_default $FUZZER $TARGET 'PROGRAMS'
   else
+    # TODO: this also picks up `runtime.c`
     FILES=$MAGMA/targets/$TARGET/$HARNESSES/*.c
     for FILE in ${FILES[@]}; do
       echo $(basename $FILE .c)
