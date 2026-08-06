@@ -125,11 +125,12 @@ def generate_monitor_df(dumpdir, campaign):
             "%s contains no monitor logs. Check the corresponding campaign "
             "log file for more information: %s", name, logfile
         )
+        return pd.DataFrame()
 
     df = pd.DataFrame(rows)
     df.set_index('TIME', inplace=True)
-    df.fillna(0, inplace=True)
-    df = df.astype(int)
+    df = df.apply(pd.to_numeric, errors='coerce')
+    df = df.fillna(0).astype(int)
     del rows
     return df
 
