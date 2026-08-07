@@ -23,3 +23,25 @@ cp liblua.a "$OUT/"
 # build driver
 make -j$(nproc) lua
 cp lua "$OUT/"
+
+if [ ! -z "$HARNESSES" ]; then
+  HARNESS_DIR="$TARGET/$HARNESSES"
+  if [ ! -d "$HARNESS_DIR" ]; then
+    echo "harness directory $HARNESS_DIR does not exist."
+    exit 1
+  fi
+
+  RAW_CC="clang"
+
+  SUPPORT="$TARGET/traffic/support"
+  RUNTIME="$OUT/runtime.o"
+  $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
+
+  for HARNESS in $HARNESS_DIR/*.c; do
+    NAME=$(basename $HARNESS .c)
+    echo "building $NAME"
+    $RAW_CC -I. -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
+    $CC "$OUT/$NAME.o" "$RUNTIME" "$OUT/liblua.a" \
+      -o "$OUT/$NAME" $LDFLAGS $LIBS
+  done
+fi
