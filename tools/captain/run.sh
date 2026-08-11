@@ -270,6 +270,9 @@ for FUZZER in "${FUZZERS[@]}"; do
         for PROGRAM in "${PROGRAMS[@]}"; do
             export PROGRAM
             export ARGS="$(get_var_or_default $FUZZER $TARGET $PROGRAM 'ARGS')"
+            if [ -z "$ARGS" ] && [ ! -z "$HARNESSES" ]; then
+                export ARGS="$(get_var_or_default $FUZZER 'HARNESS_ARGS')"
+            fi
 
             echo_time "Starting campaigns for $PROGRAM $ARGS"
             for ((i=0; i<$REPEAT; i++)); do

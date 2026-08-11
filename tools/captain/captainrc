@@ -13,3 +13,4 @@ FUZZERS=(aflplusplus)
 
 aflplusplus_TARGETS=(libxml2)
 aflplusplus_HARNESSES=(ogharn) # TODO: Should this be an array?
+aflplusplus_HARNESS_ARGS="@@"

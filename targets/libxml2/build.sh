@@ -43,19 +43,27 @@ if [ ! -z "$HARNESSES" ]; then
     exit 1
   fi
 
-  RAW_CC="clang"
+  if [ -f "$HARNESS_DIR/build.sh" ]; then
+    # Use the harness-specific build script for custom build instructions.
+    # The script is sourced so it inherits the same environment and CWD
+    # ($TARGET/repo, where .libs/libxml2.a and include/ reside).
+    source "$HARNESS_DIR/build.sh"
+  else
+    # Default: compile all .c files with traffic runtime support.
+    RAW_CC="clang"
 
-  SUPPORT="$TARGET/traffic/support"
-  RUNTIME="$OUT/runtime.o"
-  $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
+    SUPPORT="$TARGET/traffic/support"
+    RUNTIME="$OUT/runtime.o"
+    $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
 
-  for HARNESS in $HARNESS_DIR/*.c; do
-    NAME=$(basename $HARNESS .c)
-    echo "building $NAME"
-    $RAW_CC -Iinclude/ -I"$TARGET/src/" -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
-    $CC "$OUT/$NAME.o" "$RUNTIME" \
-      -Wl,--whole-archive .libs/libxml2.a -Wl,--no-whole-archive \
-      -o "$OUT/$NAME" -llzma -lz -lm \
-      $LDFLAGS $LIBS
-  done
+    for HARNESS in $HARNESS_DIR/*.c; do
+      NAME=$(basename $HARNESS .c)
+      echo "building $NAME"
+      $RAW_CC -Iinclude/ -I"$TARGET/src/" -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
+      $CC "$OUT/$NAME.o" "$RUNTIME" \
+        -Wl,--whole-archive .libs/libxml2.a -Wl,--no-whole-archive \
+        -o "$OUT/$NAME" -llzma -lz -lm \
+        $LDFLAGS $LIBS
+    done
+  fi
 fi
