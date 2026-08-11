@@ -51,9 +51,11 @@ for seed in "$SEEDS"/*; do
     fi
 done
 
+# Enable nullglob so empty directories expand to an empty array instead of
+# a literal '*' — both the seed check and the monitor poll counter rely on
+# ${#array[@]} being 0 when the directory is empty.
 shopt -s nullglob
 seeds=("$1"/*)
-shopt -u nullglob
 if [ ${#seeds[@]} -eq 0 ]; then
     echo "No seeds remaining! Campaign will not be launched."
     exit 1
@@ -62,6 +64,7 @@ fi
 # launch the fuzzer in parallel with the monitor
 rm -f "$MONITOR/tmp"*
 polls=("$MONITOR"/*)
+shopt -u nullglob
 if [ ${#polls[@]} -eq 0 ]; then
     counter=0
 else
