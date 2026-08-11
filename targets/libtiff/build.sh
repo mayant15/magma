@@ -25,10 +25,17 @@ make -j$(nproc) clean
 make -j$(nproc)
 make install
 
+# libtool merges libAFLDriver.a (from $LIBS) into the static archives as a
+# nested archive member. --whole-archive cannot handle nested archives, so
+# strip it before linking. libAFLDriver.a is still linked via $LIBS.
+ar d "$WORK/lib/libtiff.a" libAFLDriver.a
+ar d "$WORK/lib/libtiffxx.a" libAFLDriver.a
+
 cp "$WORK/bin/tiffcp" "$OUT/"
 $CXX $CXXFLAGS -std=c++11 -I$WORK/include \
     contrib/oss-fuzz/tiff_read_rgba_fuzzer.cc -o $OUT/tiff_read_rgba_fuzzer \
-    $WORK/lib/libtiffxx.a $WORK/lib/libtiff.a -lz -ljpeg -Wl,-Bstatic -llzma -Wl,-Bdynamic \
+    -Wl,--whole-archive $WORK/lib/libtiffxx.a $WORK/lib/libtiff.a -Wl,--no-whole-archive \
+    -lz -ljpeg -Wl,-Bstatic -llzma -Wl,-Bdynamic \
     $LDFLAGS $LIBS
 
 if [ ! -z "$HARNESSES" ]; then
@@ -49,7 +56,9 @@ if [ ! -z "$HARNESSES" ]; then
     echo "building $NAME"
     $RAW_CC -I"$WORK/include" -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
     $CC "$OUT/$NAME.o" "$RUNTIME" \
-      "$WORK/lib/libtiffxx.a" "$WORK/lib/libtiff.a" \
+      -Wl,--whole-archive \
+        "$WORK/lib/libtiffxx.a" "$WORK/lib/libtiff.a" \
+      -Wl,--no-whole-archive \
       -lz -llzma -ljpeg -lm \
       -o "$OUT/$NAME" $LDFLAGS $LIBS
   done

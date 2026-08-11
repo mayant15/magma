@@ -21,6 +21,11 @@ make -j$(nproc) clean
 make -j$(nproc) ossfuzz/sndfile_fuzzer
 make install
 
+# libtool merges libAFLDriver.a (from $LIBS) into the static archive as a
+# nested archive member. --whole-archive cannot handle nested archives, so
+# strip it before linking. libAFLDriver.a is still linked via $LIBS.
+ar d "$OUT/lib/libsndfile.a" libAFLDriver.a
+
 cp -v ossfuzz/sndfile_fuzzer $OUT/
 
 if [ ! -z "$HARNESSES" ]; then
@@ -41,7 +46,7 @@ if [ ! -z "$HARNESSES" ]; then
     echo "building $NAME"
     $RAW_CC -I"$OUT/include" -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
     $CC "$OUT/$NAME.o" "$RUNTIME" \
-      "$OUT/lib/libsndfile.a" \
+      -Wl,--whole-archive "$OUT/lib/libsndfile.a" -Wl,--no-whole-archive \
       -o "$OUT/$NAME" \
       -lm -lmpg123 -lopus -lmp3lame -lvorbis -lvorbisenc -logg -lFLAC -lasound \
       $LDFLAGS $LIBS

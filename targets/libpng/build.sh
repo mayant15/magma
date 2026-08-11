@@ -23,6 +23,11 @@ make -j$(nproc) libpng16.la
 
 cp .libs/libpng16.a "$OUT/"
 
+# libtool merges libAFLDriver.a (from $LIBS) into the static archive as a
+# nested archive member. --whole-archive cannot handle nested archives, so
+# strip it before linking. libAFLDriver.a is still linked via $LIBS.
+ar d .libs/libpng16.a libAFLDriver.a
+
 if [ ! -z "$HARNESSES" ]; then
   HARNESS_DIR="$TARGET/$HARNESSES"
 
@@ -43,7 +48,8 @@ if [ ! -z "$HARNESSES" ]; then
     NAME=$(basename $HARNESS .c)
     echo "building $NAME"
     $RAW_CC -I. -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
-    $CC "$OUT/$NAME.o" "$RUNTIME" .libs/libpng16.a \
+    $CC "$OUT/$NAME.o" "$RUNTIME" \
+      -Wl,--whole-archive .libs/libpng16.a -Wl,--no-whole-archive \
       -o "$OUT/$NAME" \
       -lz $LDFLAGS $LIBS
   done
@@ -53,5 +59,5 @@ else
   $CXX $CXXFLAGS -std=c++11 -I. \
        contrib/oss-fuzz/libpng_read_fuzzer.cc \
        -o $OUT/libpng_read_fuzzer \
-       $LDFLAGS .libs/libpng16.a $LIBS -lz
+       $LDFLAGS -Wl,--whole-archive .libs/libpng16.a -Wl,--no-whole-archive $LIBS -lz
 fi

@@ -41,7 +41,8 @@ if [ ! -z "$HARNESSES" ]; then
     NAME=$(basename $HARNESS .c)
     echo "building $NAME"
     $RAW_CC -I. -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
-    $CC "$OUT/$NAME.o" "$RUNTIME" "$OUT/liblua.a" \
+    $CC "$OUT/$NAME.o" "$RUNTIME" \
+      -Wl,--whole-archive "$OUT/liblua.a" -Wl,--no-whole-archive \
       -o "$OUT/$NAME" $LDFLAGS $LIBS
   done
 fi

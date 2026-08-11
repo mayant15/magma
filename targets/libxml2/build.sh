@@ -23,12 +23,17 @@ cd "$TARGET/repo"
 make -j$(nproc) clean
 make -j$(nproc) all
 
+# libtool merges libAFLDriver.a (from $LIBS) into the static archive as a
+# nested archive member. --whole-archive cannot handle nested archives, so
+# strip it before linking. libAFLDriver.a is still linked via $LIBS.
+ar d .libs/libxml2.a libAFLDriver.a
+
 cp xmllint "$OUT/"
 
 for fuzzer in libxml2_xml_read_memory_fuzzer libxml2_xml_reader_for_file_fuzzer; do
   $CXX $CXXFLAGS -std=c++11 -Iinclude/ -I"$TARGET/src/" \
       "$TARGET/src/$fuzzer.cc" -o "$OUT/$fuzzer" \
-      .libs/libxml2.a $LDFLAGS $LIBS -lz -llzma
+      -Wl,--whole-archive .libs/libxml2.a -Wl,--no-whole-archive $LDFLAGS $LIBS -lz -llzma
 done
 
 if [ ! -z "$HARNESSES" ]; then
@@ -48,7 +53,8 @@ if [ ! -z "$HARNESSES" ]; then
     NAME=$(basename $HARNESS .c)
     echo "building $NAME"
     $RAW_CC -Iinclude/ -I"$TARGET/src/" -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
-    $CC "$OUT/$NAME.o" "$RUNTIME" .libs/libxml2.a \
+    $CC "$OUT/$NAME.o" "$RUNTIME" \
+      -Wl,--whole-archive .libs/libxml2.a -Wl,--no-whole-archive \
       -o "$OUT/$NAME" -llzma -lz -lm \
       $LDFLAGS $LIBS
   done

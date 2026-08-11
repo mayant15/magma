@@ -34,7 +34,7 @@ make -j$(nproc)
 make sqlite3.c
 
 $CC $CFLAGS -I. \
-    "$TARGET/repo/test/ossfuzz.c" "./sqlite3.o" \
+    "$TARGET/repo/test/ossfuzz.c" -Wl,--whole-archive "./sqlite3.o" -Wl,--no-whole-archive \
     -o "$OUT/sqlite3_fuzz" \
     $LDFLAGS $LIBS -pthread -ldl -lm
 
@@ -55,7 +55,8 @@ if [ ! -z "$HARNESSES" ]; then
     NAME=$(basename $HARNESS .c)
     echo "building $NAME"
     $RAW_CC -I. -I"$SUPPORT" -c $HARNESS -o "$OUT/$NAME.o"
-    $CC "$OUT/$NAME.o" "$RUNTIME" "./sqlite3.o" \
+    $CC "$OUT/$NAME.o" "$RUNTIME" \
+      -Wl,--whole-archive "./sqlite3.o" -Wl,--no-whole-archive \
       -o "$OUT/$NAME" -pthread -ldl -lm \
       $LDFLAGS $LIBS
   done
