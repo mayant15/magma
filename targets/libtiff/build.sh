@@ -19,7 +19,7 @@ mkdir -p "$WORK"
 mkdir -p "$WORK/lib" "$WORK/include"
 
 cd "$TARGET/repo"
-./autogen.sh
+autoreconf --install --force
 ./configure --disable-shared --prefix="$WORK"
 make -j$(nproc) clean
 make -j$(nproc)
@@ -54,4 +54,3 @@ if [ ! -z "$HARNESSES" ]; then
       -o "$OUT/$NAME" $LDFLAGS $LIBS
   done
 fi
-
