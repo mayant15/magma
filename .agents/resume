@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+printf '[orb resume] Checking Docker\n'
+command -v docker >/dev/null
+
+if ! sudo systemctl is-active --quiet docker; then
+    printf '[orb resume] Starting Docker\n'
+    sudo systemctl start docker
+fi
+
+sudo docker info >/dev/null
+printf '[orb resume] Ready\n'

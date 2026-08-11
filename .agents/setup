@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+step() {
+    printf '[orb setup] %s\n' "$1"
+}
+
+step "Checking Bash"
+command -v bash >/dev/null
+
+if ! command -v docker >/dev/null; then
+    step "Installing Docker"
+    sudo apt-get update
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker.io
+else
+    step "Docker is already installed"
+fi
+
+step "Enabling Docker"
+sudo systemctl enable --now docker
+
+if ! id -nG "$USER" | tr ' ' '\n' | grep -Fxq docker; then
+    step "Granting $USER access to Docker"
+    sudo usermod -aG docker "$USER"
+fi
+
+sudo docker info >/dev/null
+step "Ready"
