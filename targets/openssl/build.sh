@@ -58,8 +58,8 @@ if [ ! -z "$HARNESSES" ]; then
     echo "building $NAME"
     $RAW_CC -I"$SUPPORT" -I"$OUT/include" -c $HARNESS -o "$OUT/$NAME.o"
     $CC "$OUT/$NAME.o" "$RUNTIME" \
-      -Wl,--whole-archive "$OUT/lib/libssl.a" "$OUT/lib/libcrypto.a" -Wl,--no-whole-archive \
       -o "$OUT/$NAME" \
-      $LDFLAGS $LIBS
+      $LDFLAGS $LIBS \
+      -Wl,--whole-archive,--allow-multiple-definition "$OUT/lib/libssl.a" "$OUT/lib/libcrypto.a"
   done
 fi
