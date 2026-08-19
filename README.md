@@ -42,3 +42,17 @@ This fork adds support for _"default"_ seeds:
 1. Otherwise use `$TARGET/corpus/default`.
 
 This is so we don't have to duplicate seeds N times for all N harnesses we might generate.
+
+## Apptainer Support
+
+This fork adds support for [Apptainer](https://apptainer.org/) containers instead of
+Docker, enabling use on HPC platforms like [UBC ARC](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye).
+
+In the repository root, build with
+```bash
+apptainer build magma.sif docker/magma.def
+```
+Then edit your `captainrc` to add
+```
+USE_APPTAINER=1
+```

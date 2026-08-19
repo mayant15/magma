@@ -1,0 +1,27 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%arguments
+  fuzzer=aflplusplus
+  target=libpng
+
+%files
+  ./magma /opt/magma/magma
+  ./fuzzers/{{ fuzzer }} /opt/magma/fuzzers/{{ fuzzer }}
+  ./targets/{{ target }} /opt/magma/targets/{{ target }}
+
+%post
+  set -e
+
+  export MAGMA_R=/opt/magma
+  export MAGMA=/opt/magma/magma
+  export SHARED=/opt/magma_shared
+  export OUT=/opt/magma_out
+  export FUZZER=/opt/fuzzers/{{ fuzzer }}
+  export TARGET=/opt/targets/{{ target }}
+
+  export CC=/usr/bin/gcc
+  export CXX=/usr/bin/g++
+
+  $MAGMA/preinstall.sh
+  $MAGMA/prebuild.sh
