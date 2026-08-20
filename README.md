@@ -45,11 +45,11 @@ This is so we don't have to duplicate seeds N times for all N harnesses we might
 
 ## Apptainer Support
 
-This fork adds support for [Apptainer](https://apptainer.org/) containers instead of
-Docker, enabling use on HPC platforms like [UBC ARC](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye).
-
-In the repository root, build with
-```bash
-./arc/prepare.sh
+This fork adds support for [Apptainer](https://apptainer.org/) containers instead of Docker, enabling use on HPC platforms
+like [UBC ARC](https://arc.ubc.ca/compute-storage/ubc-arc-sockeye). In your `captainrc`, add:
 ```
-This creates a self-contained `arc/package` with containers and scripts.
+ARC=1
+```
+When set, captain will
+- Build Apptainer containers instead of Docker
+- Dispatch fuzzing jobs with Slurm using `sbatch`

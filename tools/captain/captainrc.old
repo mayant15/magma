@@ -12,12 +12,13 @@ WORKDIR=./workdir
 # [REPEAT]: number of campaigns to run per program (per fuzzer)
 REPEAT=3
 
-# [APPTAINER]: use Apptainer containers instead of Docker. Useful for HPC platforms
-# like UBC ARC Sockeye. (default: unset)
-# APPTAINER=1
+# [ARC]: Run in an ARC-like environment. Use Apptainer containers and dispatch
+# jobs with Slurm. (default: unset)
+# ARC=1
 
 # [FORCE_REBUILD]: When using Apptainer, captain will pick up an existing `.sif`
 # image (if one exists). Set this to 1 to rebuild the image from `.def` every time.
+# (default: unset)
 # FORCE_REBUILD=1
 
 # [WORKER_MODE]: defines the type of CPU resources to allocate (default: 1)

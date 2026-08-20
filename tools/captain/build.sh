@@ -8,7 +8,7 @@
 # + env HARNESSES: path to custom harnesses (default: unset)
 # + env ISAN: if set, build the benchmark with ISAN/fatal canaries (default: unset)
 # + env HARDEN: if set, build the benchmark with hardened canaries (default: unset)
-# + env APPTAINER: if set, use Apptainer containers instead of Docker (default: unset)
+# + env ARC: if set, build Apptainer containers for ARC instead of Docker (default: unset)
 ##
 
 if [ -z $FUZZER ] || [ -z $TARGET ]; then
@@ -46,10 +46,20 @@ fi
 
 set -x
 
-if [ ! -z $APPTAINER ]; then
+if [ ! -z $ARC ]; then
   pushd $MAGMA
 
-  SIF="magma_${FUZZER}_${TARGET}.sif"
+  PACKAGE="$MAGMA/arc/package"
+  mkdir -p $PACKAGE
+
+  BASE_SIF="$PACKAGE/base.sif"
+  if [ ! -f $BASE_SIF ]; then
+    apptainer build \
+      --build-arg fuzzer="$FUZZER" \
+      $BASE_SIF "$MAGMA/arc/base.def"
+  fi
+
+  SIF="arc/package/magma_${FUZZER}_${TARGET}.sif"
   if [ -z $FORCE_REBUILD ] && [ -f "$SIF" ]; then
     echo "Reusing existing image: $SIF"
   else
@@ -58,7 +68,7 @@ if [ ! -z $APPTAINER ]; then
       --build-arg fuzzer="$FUZZER" \
       --build-arg target="$TARGET" \
       $mode_flag $isan_flag $harden_flag $harness_flag \
-      "$SIF" $MAGMA/arc/magma.def
+      $SIF "$MAGMA/arc/final.def"
   fi
 
   popd

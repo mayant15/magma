@@ -2,7 +2,7 @@
 
 WORKDIR=./workdir
 
-APPTAINER=1
+ARC=1
 
 REPEAT=2
 TIMEOUT=5s

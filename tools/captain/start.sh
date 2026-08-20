@@ -14,10 +14,12 @@
 # + env AFFINITY: the CPU to bind the container to (default: no affinity)
 # + env ENTRYPOINT: a custom entry point to launch in the container (default:
 #       $MAGMA/run.sh)
+# + env ARC: if set, run Apptainer containers with slurm (default: unset)
+# + env ARC_ACCOUNT: account name for ARC allocation, if using ARC=1 (default: unset)
 ##
 
 cleanup() {
-    if [ ! -t 1 ] && [ -z $APPTAINER ]; then
+    if [ ! -t 1 ] && [ -z $ARC ]; then
         docker rm -f $container_id &> /dev/null
     fi
     exit 0
@@ -38,8 +40,8 @@ source "$MAGMA/tools/captain/common.sh"
 
 IMG_NAME="magma/$FUZZER/$TARGET"
 
-if [ ! -z $APPTAINER ]; then
-    SIF="$MAGMA/magma_${FUZZER}_${TARGET}.sif"
+if [ ! -z $ARC ]; then
+    SIF="$MAGMA/arc/package/magma_${FUZZER}_${TARGET}.sif"
     if [ ! -f "$SIF" ]; then
         echo "Apptainer image not found: $SIF"
         exit 1
@@ -56,12 +58,15 @@ if [ ! -z $APPTAINER ]; then
         flag_aff="--cpuset-cpus=$AFFINITY"
     fi
 
-    apptainer run \
+    sbatch --nodes=1 --acount=$ARC_ACCOUNT --cpus-per-task=1 <<EOF
+      module load gcc apptainer
+      apptainer run \
         $flag_bind $flag_aff \
         --env=PROGRAM="$PROGRAM" --env=ARGS="$ARGS" \
         --env=FUZZARGS="$FUZZARGS" --env=POLL="$POLL" --env=TIMEOUT="$TIMEOUT" \
         --env=AFFINITY="${AFFINITY:-}" \
         "$SIF"
+    EOF
 else
     if [ ! -z $AFFINITY ]; then
         flag_aff="--cpuset-cpus=$AFFINITY --env=AFFINITY=$AFFINITY"
