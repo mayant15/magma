@@ -1,0 +1,103 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%help
+  The Magma benchmark suite, but with Apptainer instead of Docker.
+
+%arguments
+  fuzzer=aflplusplus
+  target=libpng
+  isan=1
+  harden=1
+  canaries=1
+  fixes=
+  build_flags=
+
+%files
+  ./magma /opt/magma/magma
+  ./fuzzers/{{ fuzzer }} /opt/magma/fuzzers/{{ fuzzer }}
+  ./targets/{{ target }} /opt/magma/targets/{{ target }}
+
+%post -c /bin/bash
+  set -e
+
+  export MAGMA_R=/opt/magma
+  export MAGMA=/opt/magma/magma
+  export SHARED=/opt/magma_shared
+  export OUT=/opt/magma_out
+  export FUZZER=/opt/magma/fuzzers/{{ fuzzer }}
+  export TARGET=/opt/magma/targets/{{ target }}
+
+  export CC=/usr/bin/gcc
+  export CXX=/usr/bin/g++
+  export LD=/usr/bin/ld
+  export AR=/usr/bin/ar
+  export AS=/usr/bin/as
+  export NM=/usr/bin/nm
+  export RANLIB=/usr/bin/ranlib
+
+  mkdir $SHARED $OUT
+
+  $MAGMA/preinstall.sh
+  $MAGMA/prebuild.sh
+
+  $FUZZER/preinstall.sh
+  $FUZZER/fetch.sh
+  $FUZZER/build.sh
+
+  # TODO(Mayant): At this point we can split this container into two: a fuzzer base
+  # and a target, to improve build times.
+
+  $TARGET/preinstall.sh
+  $TARGET/fetch.sh
+  $MAGMA/apply_patches.sh
+
+  ISAN_FLAG=""
+  if [[ -n '{{ isan }}' ]]; then
+    ISAN_FLAG="-DMAGMA_FATAL_CANARIES"
+  fi
+
+  HARDEN_FLAG=
+  if [[ -n '{{ harden }}' ]]; then
+    HARDEN_FLAG="-DMAGMA_HARDEN_CANARIES"
+  fi
+
+  CANARIES_FLAG=
+  if [[ -n '{{ canaries }}' ]]; then
+    CANARIES_FLAG="-DMAGMA_ENABLE_CANARIES"
+  fi
+
+  FIXES_FLAG=
+  if [[ -n '{{ fixes }}' ]]; then
+    FIXES_FLAG="-DMAGMA_ENABLE_FIXES"
+  fi
+
+  BUILD_FLAGS='{{ build_flags }}'
+  if [[ -z $BUILD_FLAGS ]]; then
+    BUILD_FLAGS="-include $MAGMA/src/canary.h $CANARIES_FLAG $FIXES_FLAG $ISAN_FLAG $HARDEN_FLAG -g -O0"
+  fi
+
+  export CFLAGS="$BUILD_FLAGS"
+  export CXXFLAGS="$BUILD_FLAGS"
+  export LIBS='-l:magma.o -lrt'
+  export LDFLAGS="-L$OUT -g"
+
+  {
+    printf 'export CFLAGS=%q\n' "$CFLAGS"
+    printf 'export CXXFLAGS=%q\n' "$CXXFLAGS"
+    printf 'export LIBS=%q\n' "$LIBS"
+    printf 'export LDFLAGS=%q\n' "$LDFLAGS"
+  } >> $APPTAINER_ENVIRONMENT
+
+  $FUZZER/instrument.sh
+
+%environment
+  export MAGMA_R=/opt/magma
+  export MAGMA=/opt/magma/magma
+  export SHARED=/opt/magma_shared
+  export OUT=/opt/magma_out
+  export FUZZER=/opt/magma/fuzzers/{{ fuzzer }}
+  export TARGET=/opt/magma/targets/{{ target }}
+
+%runscript
+  exec $MAGMA/run.sh "$@"

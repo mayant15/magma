@@ -50,7 +50,7 @@ Docker, enabling use on HPC platforms like [UBC ARC](https://arc.ubc.ca/compute-
 
 In the repository root, build with
 ```bash
-apptainer build magma.sif docker/magma.def
+apptainer build magma.sif arc/magma.def
 ```
 Then edit your `captainrc` to add
 ```
