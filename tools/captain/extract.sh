@@ -8,7 +8,13 @@
 # - env ARGS: program launch arguments
 # - env SHARED: path to host-local volume where fuzzer findings are saved
 # - env POCDIR: path to the directory where faulty test cases will be saved
+# + env APPTAINER: if set, use Apptainer containers instead of Docker (default: unset)
 ##
+
+if [ ! -z $APPTAINER ]; then
+    echo "extract.sh is not yet supported with Apptainer" >&2
+    exit 1
+fi
 
 cleanup() {
     docker rm -f $container_id 1>/dev/null 2>&1

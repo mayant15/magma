@@ -14,19 +14,19 @@ From: ubuntu:18.04
   build_flags=
 
 %files
-  ./magma /opt/magma/magma
-  ./fuzzers/{{ fuzzer }} /opt/magma/fuzzers/{{ fuzzer }}
-  ./targets/{{ target }} /opt/magma/targets/{{ target }}
+  ./magma /magma/magma
+  ./fuzzers/{{ fuzzer }} /magma/fuzzers/{{ fuzzer }}
+  ./targets/{{ target }} /magma/targets/{{ target }}
 
 %post -c /bin/bash
   set -e
 
-  export MAGMA_R=/opt/magma
-  export MAGMA=/opt/magma/magma
-  export SHARED=/opt/magma_shared
-  export OUT=/opt/magma_out
-  export FUZZER=/opt/magma/fuzzers/{{ fuzzer }}
-  export TARGET=/opt/magma/targets/{{ target }}
+  export MAGMA_R=/magma
+  export MAGMA=/magma/magma
+  export SHARED=/magma_shared
+  export OUT=/magma_out
+  export FUZZER=/magma/fuzzers/{{ fuzzer }}
+  export TARGET=/magma/targets/{{ target }}
 
   export CC=/usr/bin/gcc
   export CXX=/usr/bin/g++
@@ -92,12 +92,12 @@ From: ubuntu:18.04
   $FUZZER/instrument.sh
 
 %environment
-  export MAGMA_R=/opt/magma
-  export MAGMA=/opt/magma/magma
-  export SHARED=/opt/magma_shared
-  export OUT=/opt/magma_out
-  export FUZZER=/opt/magma/fuzzers/{{ fuzzer }}
-  export TARGET=/opt/magma/targets/{{ target }}
+  export MAGMA_R=/magma
+  export MAGMA=/magma/magma
+  export SHARED=/magma_shared
+  export OUT=/magma_out
+  export FUZZER=/magma/fuzzers/{{ fuzzer }}
+  export TARGET=/magma/targets/{{ target }}
 
 %runscript
   exec $MAGMA/run.sh "$@"

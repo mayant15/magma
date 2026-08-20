@@ -17,7 +17,7 @@
 ##
 
 cleanup() {
-    if [ ! -t 1 ]; then
+    if [ ! -t 1 ] && [ -z $APPTAINER ]; then
         docker rm -f $container_id &> /dev/null
     fi
     exit 0
@@ -38,37 +38,63 @@ source "$MAGMA/tools/captain/common.sh"
 
 IMG_NAME="magma/$FUZZER/$TARGET"
 
-if [ ! -z $AFFINITY ]; then
-    flag_aff="--cpuset-cpus=$AFFINITY --env=AFFINITY=$AFFINITY"
-fi
+if [ ! -z $APPTAINER ]; then
+    SIF="$MAGMA/magma_$FUZZER_$TARGET.sif"
+    if [ ! -f "$SIF" ]; then
+        echo "Apptainer image not found: $SIF"
+        exit 1
+    fi
 
-if [ ! -z "$ENTRYPOINT" ]; then
-    flag_ep="--entrypoint=$ENTRYPOINT"
-fi
+    flag_bind=""
+    if [ ! -z "$SHARED" ]; then
+        SHARED="$(realpath "$SHARED")"
+        flag_bind="--bind=$SHARED:/magma_shared"
+    fi
 
-if [ ! -z "$SHARED" ]; then
-    SHARED="$(realpath "$SHARED")"
-    flag_volume="--volume=$SHARED:/magma_shared"
-fi
+    flag_aff=""
+    if [ ! -z "$AFFINITY" ]; then
+        flag_aff="--cpuset-cpus=$AFFINITY"
+    fi
 
-if [ -t 1 ]; then
-    docker run -it $flag_volume \
-        --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+    apptainer run \
+        $flag_bind $flag_aff \
         --env=PROGRAM="$PROGRAM" --env=ARGS="$ARGS" \
         --env=FUZZARGS="$FUZZARGS" --env=POLL="$POLL" --env=TIMEOUT="$TIMEOUT" \
-        $flag_aff $flag_ep "$IMG_NAME"
+        --env=AFFINITY="${AFFINITY:-}" \
+        "$SIF"
 else
-    container_id=$(
-    docker run -dt $flag_volume \
-        --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
-        --env=PROGRAM="$PROGRAM" --env=ARGS="$ARGS" \
-        --env=FUZZARGS="$FUZZARGS" --env=POLL="$POLL" --env=TIMEOUT="$TIMEOUT" \
-        --network=none \
-        $flag_aff $flag_ep "$IMG_NAME"
-    )
-    container_id=$(cut -c-12 <<< $container_id)
-    echo_time "Container for $FUZZER/$TARGET/$PROGRAM started in $container_id"
-    docker logs -f "$container_id" &
-    exit_code=$(docker wait $container_id)
-    exit $exit_code
+    if [ ! -z $AFFINITY ]; then
+        flag_aff="--cpuset-cpus=$AFFINITY --env=AFFINITY=$AFFINITY"
+    fi
+
+    if [ ! -z "$ENTRYPOINT" ]; then
+        flag_ep="--entrypoint=$ENTRYPOINT"
+    fi
+
+    if [ ! -z "$SHARED" ]; then
+        SHARED="$(realpath "$SHARED")"
+        flag_volume="--volume=$SHARED:/magma_shared"
+    fi
+
+    if [ -t 1 ]; then
+        docker run -it $flag_volume \
+            --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+            --env=PROGRAM="$PROGRAM" --env=ARGS="$ARGS" \
+            --env=FUZZARGS="$FUZZARGS" --env=POLL="$POLL" --env=TIMEOUT="$TIMEOUT" \
+            $flag_aff $flag_ep "$IMG_NAME"
+    else
+        container_id=$(
+        docker run -dt $flag_volume \
+            --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+            --env=PROGRAM="$PROGRAM" --env=ARGS="$ARGS" \
+            --env=FUZZARGS="$FUZZARGS" --env=POLL="$POLL" --env=TIMEOUT="$TIMEOUT" \
+            --network=none \
+            $flag_aff $flag_ep "$IMG_NAME"
+        )
+        container_id=$(cut -c-12 <<< $container_id)
+        echo_time "Container for $FUZZER/$TARGET/$PROGRAM started in $container_id"
+        docker logs -f "$container_id" &
+        exit_code=$(docker wait $container_id)
+        exit $exit_code
+    fi
 fi

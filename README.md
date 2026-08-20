@@ -54,5 +54,5 @@ apptainer build magma.sif arc/magma.def
 ```
 Then edit your `captainrc` to add
 ```
-USE_APPTAINER=1
+APPTAINER=1
 ```

@@ -6,10 +6,9 @@
 # - env TARGET: target name (from targets/)
 # + env MAGMA: path to magma root (default: ../../)
 # + env HARNESSES: path to custom harnesses (default: unset)
-# + env ISAN: if set, build the benchmark with ISAN/fatal canaries (default:
-#       unset)
-# + env HARDEN: if set, build the benchmark with hardened canaries (default:
-#       unset)
+# + env ISAN: if set, build the benchmark with ISAN/fatal canaries (default: unset)
+# + env HARDEN: if set, build the benchmark with hardened canaries (default: unset)
+# + env APPTAINER: if set, use Apptainer containers instead of Docker (default: unset)
 ##
 
 if [ -z $FUZZER ] || [ -z $TARGET ]; then
@@ -46,12 +45,28 @@ if [ ! -z $HARNESSES ]; then
 fi
 
 set -x
-# TODO(Mayant): Should we pass in GROUP_ID and USER_ID?
-docker build -t "$IMG_NAME" \
-    --build-arg fuzzer_name="$FUZZER" \
-    --build-arg target_name="$TARGET" \
+
+if [ ! -z $APPTAINER ]; then
+  pushd $MAGMA
+
+  apptainer build \
+    --force \
+    --build-arg fuzzer="$FUZZER" \
+    --build-arg target="$TARGET" \
     $mode_flag $isan_flag $harden_flag $harness_flag \
-    -f "$MAGMA/docker/Dockerfile" "$MAGMA"
+    magma_$FUZZER_$TARGET.sif \
+    $MAGMA/arc/magma.def
+
+  popd
+else
+  # TODO(Mayant): Should we pass in GROUP_ID and USER_ID?
+  docker build -t "$IMG_NAME" \
+      --build-arg fuzzer_name="$FUZZER" \
+      --build-arg target_name="$TARGET" \
+      $mode_flag $isan_flag $harden_flag $harness_flag \
+      -f "$MAGMA/docker/Dockerfile" "$MAGMA"
+fi
+
 set +x
 
 echo "$IMG_NAME"
