@@ -49,13 +49,17 @@ set -x
 if [ ! -z $APPTAINER ]; then
   pushd $MAGMA
 
-  apptainer build \
-    --force \
-    --build-arg fuzzer="$FUZZER" \
-    --build-arg target="$TARGET" \
-    $mode_flag $isan_flag $harden_flag $harness_flag \
-    magma_$FUZZER_$TARGET.sif \
-    $MAGMA/arc/magma.def
+  SIF="magma_${FUZZER}_${TARGET}.sif"
+  if [ -z $FORCE_REBUILD ] && [ -f "$SIF" ]; then
+    echo "Reusing existing image: $SIF"
+  else
+    apptainer build \
+      --force \
+      --build-arg fuzzer="$FUZZER" \
+      --build-arg target="$TARGET" \
+      $mode_flag $isan_flag $harden_flag $harness_flag \
+      "$SIF" $MAGMA/arc/magma.def
+  fi
 
   popd
 else

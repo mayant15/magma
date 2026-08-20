@@ -39,7 +39,7 @@ source "$MAGMA/tools/captain/common.sh"
 IMG_NAME="magma/$FUZZER/$TARGET"
 
 if [ ! -z $APPTAINER ]; then
-    SIF="$MAGMA/magma_$FUZZER_$TARGET.sif"
+    SIF="$MAGMA/magma_${FUZZER}_${TARGET}.sif"
     if [ ! -f "$SIF" ]; then
         echo "Apptainer image not found: $SIF"
         exit 1
