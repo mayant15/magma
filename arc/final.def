@@ -1,8 +1,5 @@
-Bootstrap: docker
-From: ubuntu:18.04
-
-%help
-  The Magma benchmark suite, but with Apptainer instead of Docker.
+Bootstrap: localimage
+From: arc/package/base.sif
 
 %arguments
   fuzzer=aflplusplus
@@ -14,8 +11,6 @@ From: ubuntu:18.04
   build_flags=
 
 %files
-  ./magma /magma/magma
-  ./fuzzers/{{ fuzzer }} /magma/fuzzers/{{ fuzzer }}
   ./targets/{{ target }} /magma/targets/{{ target }}
 
 %post -c /bin/bash
@@ -36,17 +31,10 @@ From: ubuntu:18.04
   export NM=/usr/bin/nm
   export RANLIB=/usr/bin/ranlib
 
-  mkdir $SHARED $OUT
-
-  $MAGMA/preinstall.sh
-  $MAGMA/prebuild.sh
-
-  $FUZZER/preinstall.sh
-  $FUZZER/fetch.sh
-  $FUZZER/build.sh
-
-  # TODO(Mayant): At this point we can split this container into two: a fuzzer base
-  # and a target, to improve build times.
+  if [[ ! -d "$FUZZER" ]]; then
+    echo "incompatible build arg fuzzer: " {{ fuzzer }}
+    exit 1
+  fi
 
   $TARGET/preinstall.sh
   $TARGET/fetch.sh

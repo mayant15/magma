@@ -50,9 +50,6 @@ Docker, enabling use on HPC platforms like [UBC ARC](https://arc.ubc.ca/compute-
 
 In the repository root, build with
 ```bash
-apptainer build magma.sif arc/magma.def
+./arc/prepare.sh
 ```
-Then edit your `captainrc` to add
-```
-APPTAINER=1
-```
+This creates a self-contained `arc/package` with containers and scripts.

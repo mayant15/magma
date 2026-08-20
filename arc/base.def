@@ -1,0 +1,38 @@
+Bootstrap: docker
+From: ubuntu:18.04
+
+%help
+  The Magma benchmark suite, but with Apptainer instead of Docker.
+
+%arguments
+  fuzzer=aflplusplus
+
+%files
+  ./magma /magma/magma
+  ./fuzzers/{{ fuzzer }} /magma/fuzzers/{{ fuzzer }}
+
+%post -c /bin/bash
+  set -e
+
+  export MAGMA_R=/magma
+  export MAGMA=/magma/magma
+  export SHARED=/magma_shared
+  export OUT=/magma_out
+  export FUZZER=/magma/fuzzers/{{ fuzzer }}
+
+  export CC=/usr/bin/gcc
+  export CXX=/usr/bin/g++
+  export LD=/usr/bin/ld
+  export AR=/usr/bin/ar
+  export AS=/usr/bin/as
+  export NM=/usr/bin/nm
+  export RANLIB=/usr/bin/ranlib
+
+  mkdir $SHARED $OUT
+
+  $MAGMA/preinstall.sh
+  $MAGMA/prebuild.sh
+
+  $FUZZER/preinstall.sh
+  $FUZZER/fetch.sh
+  $FUZZER/build.sh
