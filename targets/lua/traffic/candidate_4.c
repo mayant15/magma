@@ -40,7 +40,16 @@ int LLVMFuzzerTestOneInput(uint8_t* data, int size) {
     int var3818 = lua_getmetatable(state, var2127);
     traffic_assert(true);
     traffic_assert(true);
-    int var4242 = lua_absindex(state, var2127);
+    lua_Hook var4242 = lua_gethook(state);
+    traffic_assert(true);
+    lua_Debug* null4583 = NULL;
+    int var4669 = lua_getstack(state, var3818, null4583);
+    traffic_assert(true);
+    traffic_assert(true);
+    traffic_assert(true);
+    lua_sethook(state, var4242, var4669, const801);
+    traffic_assert(true);
+    traffic_assert(true);
     traffic_assert(true);
     traffic_assert(true);
   }
