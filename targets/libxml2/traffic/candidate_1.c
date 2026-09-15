@@ -1,8 +1,20 @@
 #include <traffic.h>
 
-#include <xml2-support.h>
+#include <libxml/parser.h>
 
-int LLVMFuzzerTestOneInput(uint8_t* data, int size) {
-  xmlXPathObject** null14 = NULL;
-  int var15 = xml2_xpath_eval(data, size, null14);
+#include <libxml/tree.h>
+
+#include <libxml/xmlreader.h>
+
+#include <libxml/xpath.h>
+
+int LLVMFuzzerTestOneInput(char* data, int size) {
+  int options = 0;
+  char* encoding = NULL;
+  char* url = NULL;
+  xmlDoc* doc = xmlReadMemory(data, size, url, encoding, options);
+  int const1160 = 0;
+  int var1606 = xmlThrDefLoadExtDtdDefaultValue(const1160);
+  traffic_assert(true);
+  xmlRegisterNodeFunc* var3214 = __xmlRegisterNodeDefaultValue();
 }

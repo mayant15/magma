@@ -17,9 +17,9 @@ int LLVMFuzzerTestOneInput(char* data, int size) {
   int var1606 = xmlThrDefLoadExtDtdDefaultValue(const1160);
   traffic_assert(true);
   int var3214 = xmlPopOutputCallbacks();
-  char* null3230 = NULL;
-  char* var4821 = xmlStrsub(null3230, var1606, const1160);
-  traffic_assert(true);
+  char out3339_slot; char* out3339 = &out3339_slot;
+  char out3341_slot; char* out3341 = &out3341_slot;
+  int var4821 = xmlUTF8Charcmp(out3339, out3341);
   traffic_assert(true);
   traffic_assert(true);
 }
