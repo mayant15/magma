@@ -58,15 +58,15 @@ if [ ! -z $ARC ]; then
         flag_aff="--cpuset-cpus=$AFFINITY"
     fi
 
-    sbatch --nodes=1 --acount=$ARC_ACCOUNT --cpus-per-task=1 <<EOF
-      module load gcc apptainer
-      apptainer run \
+    sbatch --nodes=1 --account="$ARC_ACCOUNT" --cpus-per-task=1 <<EOF
+    module load gcc apptainer
+    apptainer run \
         $flag_bind $flag_aff \
         --env=PROGRAM="$PROGRAM" --env=ARGS="$ARGS" \
         --env=FUZZARGS="$FUZZARGS" --env=POLL="$POLL" --env=TIMEOUT="$TIMEOUT" \
         --env=AFFINITY="${AFFINITY:-}" \
         "$SIF"
-    EOF
+EOF
 else
     if [ ! -z $AFFINITY ]; then
         flag_aff="--cpuset-cpus=$AFFINITY --env=AFFINITY=$AFFINITY"
