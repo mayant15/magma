@@ -8,7 +8,7 @@
 
 #include <libxml/xpath.h>
 
-int LLVMFuzzerTestOneInput(char* data, int size) {
+int fuzz_4(char* data, int size) {
   int options = 0;
   char* encoding = NULL;
   char* url = NULL;

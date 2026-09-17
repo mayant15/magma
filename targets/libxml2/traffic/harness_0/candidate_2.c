@@ -8,14 +8,11 @@
 
 #include <libxml/xpath.h>
 
-int LLVMFuzzerTestOneInput(char* data, int size) {
+int fuzz_2(char* data, int size) {
   int options = 0;
   char* encoding = NULL;
   char* url = NULL;
   xmlDoc* doc = xmlReadMemory(data, size, url, encoding, options);
-  int const1160 = 0;
-  int var1606 = xmlThrDefLoadExtDtdDefaultValue(const1160);
+  xmlRelaxNGParserCtxtPtr var1606 = xmlRelaxNGNewDocParserCtxt(doc);
   traffic_assert(true);
-  int var3214 = xmlPopOutputCallbacks();
-  int* var4821 = __xmlGetWarningsDefaultValue();
 }
