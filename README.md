@@ -2,6 +2,9 @@
 
 The documentation has been moved to [the Magma homepage](https://hexhive.epfl.ch/magma).
 
+The `chore/clean-seeds` branch contains plain seeds. The `main` branch contains seeds with
+four bytes prepended, for combined harnesses.
+
 ## Custom Harnesses
 
 This fork adds support for fuzzing with custom harnesses. Keeps harnesses in `targets/`
