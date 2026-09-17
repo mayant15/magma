@@ -43,6 +43,9 @@ This fork adds support for _"default"_ seeds:
 
 This is so we don't have to duplicate seeds N times for all N harnesses we might generate.
 
+The `main` branch contains with four null-bytes prepended (for combined harnesses). `chore/clean-seeds` has seeds without
+this modification.
+
 ## Apptainer Support
 
 This fork adds support for [Apptainer](https://apptainer.org/) containers instead of Docker, enabling use on HPC platforms
