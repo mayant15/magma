@@ -12,7 +12,7 @@ CACHE_ON_DISK=1
 
 FUZZERS=(aflplusplus)
 
-aflplusplus_TARGETS=(lua libxml2)
+aflplusplus_TARGETS=(libxml2)
 
 aflplusplus_HARNESSES=(traffic) # TODO: Should this be an array?
 # aflplusplus_HARNESS_ARGS="@@"
