@@ -2,9 +2,9 @@
 
 WORKDIR=./workdir
 
-REPEAT=3
+REPEAT=1
 TIMEOUT=30s
-WORKERS=4
+WORKERS=6
 
 ISAN=1
 NO_ARCHIVE=1
@@ -12,7 +12,5 @@ CACHE_ON_DISK=1
 
 FUZZERS=(aflplusplus)
 
-aflplusplus_TARGETS=(libxml2)
-
-aflplusplus_HARNESSES=(traffic) # TODO: Should this be an array?
-# aflplusplus_HARNESS_ARGS="@@"
+aflplusplus_TARGETS=(libxml2 libpng libsndfile libtiff openssl lua sqlite3)
+aflplusplus_HARNESSES=(traffic)
