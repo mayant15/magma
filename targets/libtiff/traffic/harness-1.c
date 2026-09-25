@@ -1,7 +1,8 @@
 #include "harness-1/candidate_0.c"
+#include "harness-1/candidate_1.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 1
+#define NUM_CANDIDATES 2
 
 int LLVMFuzzerTestOneInput(char* data, int size) {
   if (size < INT_SIZE) return -1;
@@ -13,5 +14,6 @@ int LLVMFuzzerTestOneInput(char* data, int size) {
 
   switch (index % NUM_CANDIDATES) {
     case 0: return fuzz_0(rest_ptr, rest_len);
+    case 1: return fuzz_1(rest_ptr, rest_len);
   }
 }

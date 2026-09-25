@@ -5,6 +5,7 @@
 #include <sndfile.h>
 
 int fuzz_0(uint8_t* data, int size) {
-  SF_INFO out16_slot; SF_INFO* out16 = &out16_slot;
-  int var25 = sf_format_check(out16);
+  char* var29 = sf_version_string();
+  SF_INFO out50_slot; SF_INFO* out50 = &out50_slot;
+  int var59 = sf_format_check(out50);
 }

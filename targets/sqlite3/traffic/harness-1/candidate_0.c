@@ -9,8 +9,9 @@ int fuzz_0(char* data, int size) {
   traffic_assert(true);
   if ((var9 == 0)) {
     traffic_assert(true);
-    int var33 = sqlite3_close((*out2));
+    int var44 = sqlite3_close((*out2));
   } else if (!((var9 == 0))) {
     traffic_assert(true);
+    int var23 = sqlite3_close((*out2));
   }
 }

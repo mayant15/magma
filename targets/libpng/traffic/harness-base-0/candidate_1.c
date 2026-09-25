@@ -5,8 +5,12 @@
 #include <png.h>
 
 int fuzz_1(uint8_t* data, int size) {
-  png_image* null3 = NULL;
-  int var20 = png_image_begin_read_from_memory(null3, data, size);
+  png_image* null9 = NULL;
+  png_color* null11 = NULL;
+  uint8_t out16_slot; uint8_t* out16 = &out16_slot;
+  int var20 = png_image_finish_read(null9, null11, data, size, out16);
+  traffic_assert(true);
+  traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);

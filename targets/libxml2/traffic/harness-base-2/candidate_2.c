@@ -1,7 +1,5 @@
 #include <traffic.h>
 
-#include <libxml/globals.h>
-
 #include <libxml/tree.h>
 
 #include <libxml/parser.h>
@@ -11,23 +9,17 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_2(char* data, int size) {
-  xmlNode* null27 = NULL;
-  bool var78 = xmlNodeIsText(null27);
-  traffic_assert(true);
+  xmlInitParser();
   xmlTextReader* null147 = NULL;
-  xmlFreeTextReader(null147);
+  int var152 = xmlTextReaderDepth(null147);
   traffic_assert(true);
-  xmlParserCtxt* var237 = xmlNewParserCtxt();
-  xmlNode* null271 = NULL;
-  TF_String const272 = "5kSgO7G";
-  char* var316 = xmlGetProp(null271, const272);
+  int var230 = xmlTextReaderIsEmptyElement(null147);
   traffic_assert(true);
+  xmlNode out256_slot; xmlNode* out256 = &out256_slot;
+  bool var308 = xmlNodeIsText(out256);
   traffic_assert(true);
-  xmlNode* null340 = NULL;
-  xmlUnlinkNode(null340);
-  traffic_assert(true);
-  xmlNode out414_slot; xmlNode* out414 = &out414_slot;
-  xmlNode* var476 = xmlAddChild(null27, out414);
+  TF_String const342 = "YlCc5XCjW%";
+  char* var386 = xmlGetProp(out256, const342);
   traffic_assert(true);
   traffic_assert(true);
 }

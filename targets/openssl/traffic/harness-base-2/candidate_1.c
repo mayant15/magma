@@ -7,11 +7,10 @@
 #include <x509-support.h>
 
 int fuzz_1(uint8_t* data, int size) {
-  uint8_t** in = &data;
-  X509_STORE_CTX* var28 = X509_STORE_CTX_new();
-  X509* null36 = NULL;
-  X509_free(null36);
+  X509* null1 = NULL;
+  X509_free(null1);
   traffic_assert(true);
-  int var86 = X509_STORE_CTX_get_error(var28);
+  X509_STORE_CTX* var57 = X509_STORE_CTX_new();
+  int var86 = X509_STORE_CTX_get_error(var57);
   traffic_assert(true);
 }

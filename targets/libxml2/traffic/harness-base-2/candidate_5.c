@@ -1,7 +1,5 @@
 #include <traffic.h>
 
-#include <libxml/globals.h>
-
 #include <libxml/tree.h>
 
 #include <libxml/parser.h>
@@ -11,40 +9,26 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_5(char* data, int size) {
-  xmlInitParser();
-  xmlParserCtxt* null119 = NULL;
-  xmlFreeParserCtxt(null119);
+  xmlNode* null23 = NULL;
+  int var76 = xmlChildElementCount(null23);
   traffic_assert(true);
-  xmlNode out189_slot; xmlNode* out189 = &out189_slot;
-  TF_String const191 = "kG(uV9%zjR1qGeeVZ";
-  char* var235 = xmlGetProp(out189, const191);
-  traffic_assert(true);
-  traffic_assert(true);
-  xmlDoc* null243 = NULL;
-  xmlFreeDoc(null243);
-  traffic_assert(true);
-  xmlParserInputBuffer* null378 = NULL;
-  xmlFreeParserInputBuffer(null378);
-  traffic_assert(true);
-  xmlNode* var474 = xmlDocGetRootElement(null243);
-  traffic_assert(true);
-  xmlTextReader* var554 = xmlNewTextReader(null378, var235);
+  xmlNs out86_slot; xmlNs* out86 = &out86_slot;
+  TF_String const88 = "eizq)YFP5jTa7sE[";
+  xmlNode* var154 = xmlNewNode(out86, const88);
   traffic_assert(true);
   traffic_assert(true);
-  int const615 = 1;
-  xmlParserInputBuffer* var635 = xmlParserInputBufferCreateStatic(data, size, const615);
+  xmlDoc* null178 = NULL;
+  xmlNode* var233 = xmlDocGetRootElement(null178);
   traffic_assert(true);
+  xmlNode* null252 = NULL;
+  xmlFreeNode(null252);
   traffic_assert(true);
+  xmlUnlinkNode(var154);
   traffic_assert(true);
-  int var717 = xmlTextReaderIsEmptyElement(var554);
+  xmlTextReader* null456 = NULL;
+  int var465 = xmlTextReaderRead(null456);
   traffic_assert(true);
-  xmlDoc* var797 = xmlCopyDoc(null243, size);
-  traffic_assert(true);
-  traffic_assert(true);
-  int var878 = xmlTextReaderRead(var554);
-  traffic_assert(true);
-  xmlFreeParserInputBuffer(var635);
-  traffic_assert(true);
-  char* var1037 = xmlNodeGetContent(out189);
+  xmlNode* null492 = NULL;
+  bool var543 = xmlNodeIsText(null492);
   traffic_assert(true);
 }

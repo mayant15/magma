@@ -9,7 +9,13 @@ int fuzz_1(char* data, int size) {
   traffic_assert(true);
   if ((var9 == 0)) {
     traffic_assert(true);
-    int var44 = sqlite3_close((*out2));
+    int const30 = 0;
+    int var44 = sqlite3_limit((*out2), const30, size);
+    traffic_assert(true);
+    int const52 = 0;
+    int const54 = -1;
+    int var63 = sqlite3_limit((*out2), const52, const54);
+    traffic_assert(true);
   } else if (!((var9 == 0))) {
     traffic_assert(true);
     int var23 = sqlite3_close((*out2));

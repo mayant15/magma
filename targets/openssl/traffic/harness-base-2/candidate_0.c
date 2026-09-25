@@ -7,11 +7,13 @@
 #include <x509-support.h>
 
 int fuzz_0(uint8_t* data, int size) {
-  uint8_t** in = &data;
-  X509_STORE_CTX* null27 = NULL;
-  x509_fuzz_ctx_free(null27);
+  X509* null1 = NULL;
+  X509_free(null1);
   traffic_assert(true);
-  X509_STORE* null42 = NULL;
-  X509_STORE_free(null42);
+  X509_STORE* null36 = NULL;
+  X509_STORE_free(null36);
+  traffic_assert(true);
+  X509_STORE_CTX* null85 = NULL;
+  x509_fuzz_ctx_free(null85);
   traffic_assert(true);
 }

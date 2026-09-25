@@ -1,7 +1,5 @@
 #include <traffic.h>
 
-#include <libxml/globals.h>
-
 #include <libxml/tree.h>
 
 #include <libxml/parser.h>
@@ -11,39 +9,30 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_6(char* data, int size) {
-  xmlParserCtxt* null43 = NULL;
-  char out48_slot; char* out48 = &out48_slot;
-  char* null51 = NULL;
-  int const52 = 1;
-  xmlDoc* var78 = xmlCtxtReadMemory(null43, data, size, out48, null51, const52);
+  xmlInitParser();
+  xmlTextReader* null141 = NULL;
+  xmlFreeTextReader(null141);
+  traffic_assert(true);
+  int var229 = xmlTextReaderRead(null141);
+  traffic_assert(true);
+  xmlParserInputBuffer* null290 = NULL;
+  xmlFreeParserInputBuffer(null290);
+  traffic_assert(true);
+  xmlDoc* null329 = NULL;
+  xmlNode* var384 = xmlDocGetRootElement(null329);
+  traffic_assert(true);
+  xmlNode* null405 = NULL;
+  xmlUnlinkNode(null405);
+  traffic_assert(true);
+  xmlNode* null480 = NULL;
+  xmlFreeNode(null480);
+  traffic_assert(true);
+  xmlDoc* null543 = NULL;
+  xmlFreeDoc(null543);
+  traffic_assert(true);
+  xmlNs out625_slot; xmlNs* out625 = &out625_slot;
+  TF_String const627 = "uM1APi";
+  xmlNode* var693 = xmlNewNode(out625, const627);
   traffic_assert(true);
   traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  xmlDoc* null108 = NULL;
-  xmlNode* var163 = xmlDocGetRootElement(null108);
-  traffic_assert(true);
-  xmlParserCtxt* null206 = NULL;
-  xmlFreeParserCtxt(null206);
-  traffic_assert(true);
-  xmlNode* null265 = NULL;
-  xmlUnlinkNode(null265);
-  traffic_assert(true);
-  xmlFreeDoc(null108);
-  traffic_assert(true);
-  xmlNode* null429 = NULL;
-  bool var480 = xmlNodeIsText(null429);
-  traffic_assert(true);
-  bool var560 = xmlIsBlankNode(null265);
-  traffic_assert(true);
-  xmlNs* null573 = NULL;
-  TF_String const574 = "KdM4&k4a";
-  xmlNode* var640 = xmlNewNode(null573, const574);
-  traffic_assert(true);
-  traffic_assert(true);
-  xmlFreeNode(null265);
-  traffic_assert(true);
-  xmlParserCtxt* var800 = xmlNewParserCtxt();
 }

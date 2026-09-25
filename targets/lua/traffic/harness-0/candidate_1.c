@@ -10,9 +10,15 @@ int fuzz_1(char* data, int size) {
     traffic_assert(true);
     lua_pushinteger(var10, size);
     traffic_assert(true);
-    int const50 = 0;
-    lua_settop(var10, const50);
+    lua_pushnil(var10);
     traffic_assert(true);
-    lua_close(var10);
+    int const79 = 0;
+    lua_settop(var10, const79);
+    traffic_assert(true);
+    int const105 = 0;
+    lua_settop(var10, const105);
+    traffic_assert(true);
+    int const127 = 0;
+    int var134 = lua_checkstack(var10, const127);
   }
 }

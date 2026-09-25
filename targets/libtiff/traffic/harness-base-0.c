@@ -1,4 +1,4 @@
-#include "harness-base-2/candidate_0.c"
+#include "harness-base-0/candidate_0.c"
 
 #define INT_SIZE 4
 #define NUM_CANDIDATES 1

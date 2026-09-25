@@ -1,7 +1,5 @@
 #include <traffic.h>
 
-#include <libxml/globals.h>
-
 #include <libxml/tree.h>
 
 #include <libxml/parser.h>
@@ -11,29 +9,43 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_3(char* data, int size) {
-  xmlInitParser();
-  xmlParserCtxt* null119 = NULL;
-  xmlFreeParserCtxt(null119);
+  xmlNode* null23 = NULL;
+  int var76 = xmlChildElementCount(null23);
   traffic_assert(true);
-  int const203 = 1;
-  char* null206 = NULL;
-  char out207_slot; char* out207 = &out207_slot;
-  xmlDoc* var235 = xmlCtxtReadMemory(null119, data, const203, null206, out207, size);
+  xmlNs out86_slot; xmlNs* out86 = &out86_slot;
+  TF_String const88 = "eizq)YFP5jTa7sE[";
+  xmlNode* var154 = xmlNewNode(out86, const88);
   traffic_assert(true);
   traffic_assert(true);
+  xmlUnlinkNode(null23);
+  traffic_assert(true);
+  xmlDoc* null237 = NULL;
+  xmlFreeDoc(null237);
+  traffic_assert(true);
+  xmlAttr* var387 = xmlHasProp(null23, const88);
+  traffic_assert(true);
+  traffic_assert(true);
+  xmlParserInputBuffer* null451 = NULL;
+  char out452_slot; char* out452 = &out452_slot;
+  xmlTextReader* var466 = xmlNewTextReader(null451, out452);
+  traffic_assert(true);
+  traffic_assert(true);
+  xmlParserCtxt* null510 = NULL;
+  int const513 = 1;
+  char out515_slot; char* out515 = &out515_slot;
+  char* null518 = NULL;
+  int const519 = -1;
+  xmlDoc* var545 = xmlCtxtReadMemory(null510, data, const513, out515, null518, const519);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
-  xmlNode* null271 = NULL;
-  bool var320 = xmlIsBlankNode(null271);
-  traffic_assert(true);
-  xmlNs* null333 = NULL;
-  TF_String const334 = "YjkEy8dB@Oy%VDKk)4";
-  xmlNode* var400 = xmlNewNode(null333, const334);
   traffic_assert(true);
   traffic_assert(true);
-  xmlTextReader* null476 = NULL;
-  int var481 = xmlTextReaderDepth(null476);
+  xmlDoc* var628 = xmlCopyDoc(null237, const519);
+  traffic_assert(true);
+  traffic_assert(true);
+  xmlAttr* var707 = xmlHasProp(var154, const88);
+  traffic_assert(true);
   traffic_assert(true);
 }
