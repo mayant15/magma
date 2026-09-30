@@ -40,9 +40,13 @@ if [ ! -z "$HARNESSES" ]; then
     exit 1
   fi
 
-  SUPPORT="$TARGET/traffic/support"
-  RUNTIME="$OUT/runtime.o"
-  $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
+  SUPPORT="$TARGET/$HARNESSES/support"
+
+  RUNTIME=""
+  if [ -f "$SUPPORT/runtime.c" ]; then
+    RUNTIME="$OUT/runtime.o"
+    $RAW_CC -I"$SUPPORT" -c "$SUPPORT/runtime.c" -o "$RUNTIME"
+  fi
 
   for HARNESS in $HARNESS_DIR/*.c; do
     NAME=$(basename $HARNESS .c)
