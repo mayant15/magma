@@ -6,6 +6,10 @@
 #include <lua.h>
 #include <lauxlib.h>
 
+static int function_pointer3458764514880651264fp(lua_State*, int, lua_KContext){
+	exit(0);
+}
+
 int fuzz_25(char* fuzzData, long size) {
    char* luaL_loadbufferxvar3[size+1];
 	sprintf(luaL_loadbufferxvar3, "/tmp/pyuiu");

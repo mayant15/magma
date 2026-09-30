@@ -6,6 +6,10 @@
 #include <lua.h>
 #include <lauxlib.h>
 
+static int function_pointer3458764514880651264fp(lua_State*, int, lua_KContext){
+	exit(0);
+}
+
 int fuzz_12(char* fuzzData, long size) {
    lua_KContext lua_pcallkvar4;
 	memset(&lua_pcallkvar4, 0, sizeof(lua_pcallkvar4));

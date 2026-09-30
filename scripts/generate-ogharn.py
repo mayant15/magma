@@ -8,8 +8,10 @@ For each library:
   - out-1, out-2, out-3 each become one dispatcher: harness_0.c, harness_1.c, harness_2.c
   - within an out-dir, standalone harnesses are sorted NUMERICALLY by their harness
     number (harness1, harness2, ... harness10, ...) and become candidate_0, candidate_1, ...
-  - each candidate_K.c keeps the original file's #include block, then wraps everything
-    after the `fuzzData[size] = '\\0';` boilerplate marker into `int fuzz_K(char* fuzzData, long size) { ... }`
+  - each candidate_K.c keeps everything in the original file before `int main`
+    (includes, typedefs, function-pointer stub definitions, etc.) as a prefix, then wraps
+    everything after the `fuzzData[size] = '\\0';` boilerplate marker into
+    `int fuzz_K(char* fuzzData, long size) { ... }`
   - harness_N.c is the fixed dispatcher template (reads argv[1], takes the first 4 bytes
     as an index, calls fuzz_{index % NUM_CANDIDATES} on the rest), templated only by
     NUM_CANDIDATES and the #include of each candidate_K.c.
@@ -27,13 +29,14 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MARKER_RE = re.compile(r"""fuzzData\[size\] = '\\0';""")
+MAIN_RE = re.compile(r"^int\s+main\s*\(")
 HARNESS_NUM_RE = re.compile(r"^harness(\d+):")
 
 LIBS = ["libpng", "libsndfile", "libtiff", "libxml2", "lua", "sqlite3"]
 
 DISPATCHER_TEMPLATE = """#include <stdint.h>
 
-{includes}
+{prefix}
 
 #define INT_SIZE 4
 #define NUM_CANDIDATES {num_candidates}
@@ -93,18 +96,21 @@ def natural_harness_files(src_dir: Path):
 
 
 def split_original(path: Path):
-    """Split an original standalone harness into (include_block, body_after_marker)."""
+    """Split an original standalone harness into (prefix_before_main, body_after_marker)."""
     text = path.read_text()
     lines = text.splitlines()
 
-    include_lines = []
-    for line in lines:
-        if line.startswith("#include"):
-            include_lines.append(line)
-        elif line.strip() == "":
-            continue
-        else:
+    main_idx = None
+    for i, line in enumerate(lines):
+        if MAIN_RE.match(line):
+            main_idx = i
             break
+    if main_idx is None:
+        raise ValueError(f"no `int main(` found in {path}")
+
+    prefix_lines = lines[:main_idx]
+    while prefix_lines and prefix_lines[-1].strip() == "":
+        prefix_lines.pop()
 
     marker_idx = None
     for i, line in enumerate(lines):
@@ -120,13 +126,13 @@ def split_original(path: Path):
     if not body_lines:
         raise ValueError(f"empty body after marker in {path}")
 
-    return include_lines, body_lines
+    return prefix_lines, body_lines
 
 
 def make_candidate(path: Path, k: int) -> str:
-    include_lines, body_lines = split_original(path)
+    prefix_lines, body_lines = split_original(path)
     out = []
-    out.extend(include_lines)
+    out.extend(prefix_lines)
     out.append("")
     out.append(f"int fuzz_{k}(char* fuzzData, long size) {{")
     out.extend(body_lines)
@@ -136,12 +142,12 @@ def make_candidate(path: Path, k: int) -> str:
     return text
 
 
-def make_dispatcher(candidate_includes: list, num_candidates: int) -> str:
-    includes = "\n".join(candidate_includes)
+def make_dispatcher(candidate_prefix: list, num_candidates: int) -> str:
+    prefix = "\n".join(candidate_prefix)
     cases = "\n".join(
         f"      case {k}: return fuzz_{k}(rest_ptr, rest_len);" for k in range(num_candidates)
     )
-    return DISPATCHER_TEMPLATE.format(includes=includes, num_candidates=num_candidates, cases=cases)
+    return DISPATCHER_TEMPLATE.format(prefix=prefix, num_candidates=num_candidates, cases=cases)
 
 
 def process_lib(lib: str, dry_run: bool):
@@ -161,14 +167,14 @@ def process_lib(lib: str, dry_run: bool):
             continue
 
         candidate_dir = ogharn_dir / f"harness_{harness_idx}"
-        candidate_includes = []
+        dispatcher_includes = []
         for k, f in enumerate(files):
             candidate_text = make_candidate(f, k)
             candidate_path = candidate_dir / f"candidate_{k}.c"
-            candidate_includes.append(f'#include "harness_{harness_idx}/candidate_{k}.c"')
+            dispatcher_includes.append(f'#include "harness_{harness_idx}/candidate_{k}.c"')
             written.append((candidate_path, candidate_text))
 
-        dispatcher_text = make_dispatcher(candidate_includes, len(files))
+        dispatcher_text = make_dispatcher(dispatcher_includes, len(files))
         dispatcher_path = ogharn_dir / f"harness_{harness_idx}.c"
         written.append((dispatcher_path, dispatcher_text))
 
