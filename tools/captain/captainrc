@@ -6,11 +6,11 @@ REPEAT=1
 TIMEOUT=30s
 WORKERS=6
 
-ISAN=1
 NO_ARCHIVE=1
 CACHE_ON_DISK=1
 
 FUZZERS=(aflplusplus)
 
-aflplusplus_TARGETS=(libxml2 libpng libsndfile libtiff openssl lua sqlite3)
-aflplusplus_HARNESSES=(traffic)
+aflplusplus_TARGETS=(openssl)
+aflplusplus_HARNESSES=(ogharn)
+aflplusplus_HARNESS_ARGS="@@"
