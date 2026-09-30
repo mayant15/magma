@@ -5,7 +5,7 @@
 #define INT_SIZE 4
 #define NUM_CANDIDATES 1
 
-int fuzz_0(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	  FILE *f;
     char *fuzzData = NULL;
@@ -34,11 +34,11 @@ int fuzz_0(int argc, char *argv[])
         exit(0);
     fuzzData[size] = '\0';
 
-    if (size < INT_SIZE) return 0
+    if (size < INT_SIZE) return 0;
 
-    uint32_t index = *((uint32_t*)data);
+    uint32_t index = *((uint32_t*)fuzzData);
 
-    char* rest_ptr = data + INT_SIZE;
+    char* rest_ptr = fuzzData + INT_SIZE;
     long rest_len = size - INT_SIZE;
 
     switch (index % NUM_CANDIDATES) {
