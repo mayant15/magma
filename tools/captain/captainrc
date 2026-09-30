@@ -2,15 +2,18 @@
 
 WORKDIR=./workdir
 
-REPEAT=1
-TIMEOUT=30s
-WORKERS=6
+REPEAT=8
+TIMEOUT=24h
+WORKERS=8
 
+ISAN=1
 NO_ARCHIVE=1
 CACHE_ON_DISK=1
 
 FUZZERS=(aflplusplus)
 
-aflplusplus_TARGETS=(openssl)
+aflplusplus_TARGETS=(libxml2 libsndfile libtiff libpng openssl lua sqlite3)
+
+# aflplusplus_HARNESSES=(traffic)
 aflplusplus_HARNESSES=(ogharn)
 aflplusplus_HARNESS_ARGS="@@"
