@@ -18,4 +18,10 @@ pull() {
   scp -v "$FROM:$OUT" "$TO"
 }
 
-pull svivum-9 openssl-ogharn.tar.gz
+pull svivum-2 traffic/libxml2.tar.gz
+pull svivum-3 traffic/libpng.tar.gz
+pull svivum-4 traffic/libsndfile.tar.gz
+pull svivum-5 traffic/libtiff.tar.gz
+pull svivum-6 traffic/openssl.tar.gz
+pull svivum-7 traffic/lua.tar.gz
+pull svivum-8 traffic/sqlite3.tar.gz
