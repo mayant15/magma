@@ -4,7 +4,7 @@
 
 #include <lua.h>
 
-int fuzz_2(char* data, int size) {
+int fuzz_4(char* data, int size) {
   lua_State* var50 = luaL_newstate();
   int const83 = -1;
   int var101 = lua_checkstack(var50, const83);
@@ -38,23 +38,34 @@ int fuzz_2(char* data, int size) {
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
-  lua_settop(var50, var210);
+  int const403 = -1;
+  lua_settop(var50, const403);
   traffic_assert(true);
   traffic_assert(true);
-  lua_settop(var50, var154);
+  lua_settop(var50, var101);
   traffic_assert(true);
   traffic_assert(true);
-  char out481_slot; char* out481 = &out481_slot;
-  int const483 = 0;
-  int var529 = luaL_loadbufferx(var50, out481, const483, const112, const110);
+  int const521 = 0;
+  lua_pushboolean(var50, const521);
+  traffic_assert(true);
+  traffic_assert(true);
+  int const545 = -1;
+  int const547 = 1;
+  int const549 = -1;
+  void* null554 = NULL;
+  int var581 = lua_pcallk(var50, const545, const547, const549, const178, null554);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
+  size_t* null635 = NULL;
+  char* var636 = lua_tolstring(var50, const549, null635);
   traffic_assert(true);
-  void* null558 = NULL;
-  int var585 = lua_pcallk(var50, var101, const178, const483, var210, null558);
   traffic_assert(true);
+  traffic_assert(true);
+  int const686 = 0;
+  size_t out688_slot; size_t* out688 = &out688_slot;
+  char* var690 = lua_tolstring(var50, const686, out688);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);

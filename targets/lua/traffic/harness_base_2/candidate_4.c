@@ -4,7 +4,7 @@
 
 #include <lua.h>
 
-int fuzz_2(char* data, int size) {
+int fuzz_4(char* data, int size) {
   lua_State* var50 = luaL_newstate();
   TF_String const57 = "mDBj@fra";
   TF_String const59 = "ReLA)O1!5S*";
@@ -42,41 +42,23 @@ int fuzz_2(char* data, int size) {
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
-  lua_settop(var50, const191);
-  traffic_assert(true);
-  traffic_assert(true);
-  int const576 = 1;
-  size_t out578_slot; size_t* out578 = &out578_slot;
-  char* var580 = lua_tolstring(var50, const576, out578);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  size_t* null633 = NULL;
-  char* var634 = lua_tolstring(var50, size, null633);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  lua_settop(var50, const576);
-  traffic_assert(true);
-  traffic_assert(true);
-  lua_settop(var50, var101);
-  traffic_assert(true);
-  traffic_assert(true);
-  int const756 = 1;
-  void* null765 = NULL;
-  int var792 = lua_pcallk(var50, const756, size, var209, const576, null765);
+  int const496 = -1;
+  int const498 = -1;
+  void* null501 = NULL;
+  int var528 = lua_pcallk(var50, const258, const191, const496, const498, null501);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
-  char* null800 = NULL;
-  int const801 = 0;
-  TF_String const803 = "Oxbgwg4OXVRU5)^yxhK";
-  TF_String const805 = "7qb@6&mH]Z&";
-  int var847 = luaL_loadbufferx(var50, null800, const801, const803, const805);
+  char* null536 = NULL;
+  TF_String const539 = "fDo9REQnXwU]jW";
+  TF_String const541 = "[OUJQhJ38zts";
+  int var583 = luaL_loadbufferx(var50, null536, const191, const539, const541);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
+  traffic_assert(true);
+  lua_close(var50);
   traffic_assert(true);
 }
