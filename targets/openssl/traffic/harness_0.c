@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 
 #include "harness_0/candidate_0.c"
 
