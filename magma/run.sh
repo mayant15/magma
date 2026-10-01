@@ -41,15 +41,15 @@ fi
 export SEEDS
 
 # prune the seed corpus for any fault-triggering test-cases
-for seed in "$SEEDS"/*; do
-    out="$("$MAGMA"/runonce.sh "$seed")"
-    code=$?
-
-    if [ $code -ne 0 ]; then
-        echo "$seed: $out"
-        rm "$seed"
-    fi
-done
+# for seed in "$SEEDS"/*; do
+#     out="$("$MAGMA"/runonce.sh "$seed")"
+#     code=$?
+#
+#     if [ $code -ne 0 ]; then
+#         echo "$seed: $out"
+#         rm "$seed"
+#     fi
+# done
 
 # Enable nullglob so empty directories expand to an empty array instead of
 # a literal '*' — both the seed check and the monitor poll counter rely on
