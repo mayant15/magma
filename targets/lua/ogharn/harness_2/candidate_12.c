@@ -14,7 +14,7 @@ int fuzz_12(char* fuzzData, long size) {
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, "w", fuzzData);
+   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, "w", NULL);
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
@@ -23,7 +23,7 @@ int fuzz_12(char* fuzzData, long size) {
 	if((int)lua_gettopval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, -1, lua_gettopval1, 0, lua_pcallkvar4, NULL);
+   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, LUA_MULTRET, lua_gettopval1, LUA_TNIL, lua_pcallkvar4, NULL);
 	if((int)lua_pcallkval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}

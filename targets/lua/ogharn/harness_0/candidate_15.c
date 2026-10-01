@@ -11,7 +11,7 @@ int fuzz_15(char* fuzzData, long size) {
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, fuzzData+size, fuzzData);
+   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, fuzzData+size, NULL);
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}

@@ -7,16 +7,14 @@
 #include <lauxlib.h>
 
 int fuzz_27(char* fuzzData, long size) {
-   char* luaL_loadbufferxvar4[size+1];
-	sprintf(luaL_loadbufferxvar4, "/tmp/jyu0q");
    lua_State* luaL_newstateval1 = luaL_newstate();
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, "w", luaL_loadbufferxvar4);
+   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, NULL, NULL);
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   lua_pushnil(luaL_newstateval1);
+   lua_pushboolean(luaL_newstateval1, luaL_loadbufferxval1);
    return 0;
 }

@@ -6,7 +6,10 @@
 #include <lua.h>
 #include <lauxlib.h>
 
-int fuzz_25(char* fuzzData, long size) {
+int fuzz_29(char* fuzzData, long size) {
+   lua_KContext lua_pcallkvar4;
+	memset(&lua_pcallkvar4, 0, sizeof(lua_pcallkvar4));
+
    lua_State* luaL_newstateval1 = luaL_newstate();
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");
@@ -16,5 +19,13 @@ int fuzz_25(char* fuzzData, long size) {
 		fprintf(stderr, "err");
 		exit(0);	}
    lua_pushnil(luaL_newstateval1);
+   char* lua_tolstringval1 = lua_tolstring(luaL_newstateval1, luaL_loadbufferxval1, NULL);
+	if(!lua_tolstringval1){
+		fprintf(stderr, "err");
+		exit(0);	}
+   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, LUA_TTHREAD, LUA_OPLT, LUA_OK, lua_pcallkvar4, NULL);
+	if((int)lua_pcallkval1 < 0){
+		fprintf(stderr, "err");
+		exit(0);	}
    return 0;
 }

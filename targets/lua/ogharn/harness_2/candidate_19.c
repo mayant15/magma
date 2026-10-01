@@ -11,15 +11,11 @@ int fuzz_19(char* fuzzData, long size) {
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, "w", fuzzData);
+   int luaL_loadbufferxval1 = luaL_loadbufferx(luaL_newstateval1, fuzzData, size, "w", NULL);
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
    lua_close(luaL_newstateval1);
-   int lua_gettopval1 = lua_gettop(luaL_newstateval1);
-	if((int)lua_gettopval1 < 0){
-		fprintf(stderr, "err");
-		exit(0);	}
-   lua_settop(luaL_newstateval1, luaL_loadbufferxval1);
+   lua_pushboolean(luaL_newstateval1, 1);
    return 0;
 }

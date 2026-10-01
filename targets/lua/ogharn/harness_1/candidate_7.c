@@ -16,6 +16,6 @@ int fuzz_7(char* fuzzData, long size) {
 		fprintf(stderr, "err");
 		exit(0);	}
    lua_close(luaL_newstateval1);
-   lua_pushboolean(luaL_newstateval1, luaL_loadbufferxval1);
+   lua_settop(luaL_newstateval1, luaL_loadbufferxval1);
    return 0;
 }
