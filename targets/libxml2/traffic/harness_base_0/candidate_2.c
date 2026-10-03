@@ -10,24 +10,27 @@
 
 int fuzz_2(char* data, int size) {
   xmlInitParser();
-  xmlTextReader* null141 = NULL;
-  xmlFreeTextReader(null141);
+  xmlDoc* null79 = NULL;
+  xmlFreeDoc(null79);
   traffic_assert(true);
-  int var229 = xmlTextReaderRead(null141);
+  xmlNode* null182 = NULL;
+  char* var229 = xmlNodeGetContent(null182);
   traffic_assert(true);
-  xmlParserInputBuffer* null290 = NULL;
-  xmlFreeParserInputBuffer(null290);
+  xmlNode out253_slot; xmlNode* out253 = &out253_slot;
+  int var307 = xmlChildElementCount(out253);
   traffic_assert(true);
-  xmlDoc* null329 = NULL;
-  xmlNode* var384 = xmlDocGetRootElement(null329);
+  xmlNode* var385 = xmlAddChild(out253, null182);
   traffic_assert(true);
-  xmlNode* null405 = NULL;
-  xmlUnlinkNode(null405);
   traffic_assert(true);
-  xmlNode out487_slot; xmlNode* out487 = &out487_slot;
-  bool var539 = xmlNodeIsText(out487);
+  xmlParserCtxt* null429 = NULL;
+  char* null431 = NULL;
+  char* null435 = NULL;
+  int const438 = 1;
+  xmlDoc* var464 = xmlCtxtReadMemory(null429, null431, size, null435, var229, const438);
   traffic_assert(true);
-  xmlTextReader* null612 = NULL;
-  int var617 = xmlTextReaderDepth(null612);
+  traffic_assert(true);
+  traffic_assert(true);
+  traffic_assert(true);
+  traffic_assert(true);
   traffic_assert(true);
 }

@@ -9,10 +9,15 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_0(char* data, int size) {
-  int const24 = 1;
-  xmlParserInputBuffer* var34 = xmlParserInputBufferCreateStatic(data, size, const24);
-  traffic_assert(true);
   xmlInitParser();
   traffic_assert(true);
-  xmlParserCtxt* var97 = xmlNewParserCtxt();
+  xmlNs* null40 = NULL;
+  TF_String const41 = "emOlU!w)";
+  xmlNode* var69 = xmlNewNode(null40, const41);
+  traffic_assert(true);
+  if (!((var69 == NULL))) {
+    traffic_assert(true);
+    xmlFreeNode(var69);
+    traffic_assert(true);
+  }
 }

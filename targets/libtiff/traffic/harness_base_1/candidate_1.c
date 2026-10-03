@@ -6,15 +6,14 @@
 
 int fuzz_1(uint8_t* data, int size) {
   TIFF* var24 = tiff_open_w();
-  int var49 = tiff_fuzz_read_strip(var24);
-  traffic_assert(true);
-  TIFFClose(var24);
-  traffic_assert(true);
-  TIFF* var100 = tiff_open_r(data, size);
+  int const45 = 1;
+  int var49 = TIFFSetField(var24, size, const45);
   traffic_assert(true);
   traffic_assert(true);
-  int var127 = tiff_fuzz_read_rgba(var100);
   traffic_assert(true);
-  TIFFClose(var100);
+  TIFF* var77 = tiff_open_r(data, size);
+  traffic_assert(true);
+  traffic_assert(true);
+  TIFFClose(var77);
   traffic_assert(true);
 }

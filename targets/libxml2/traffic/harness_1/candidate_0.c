@@ -9,10 +9,11 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_0(char* data, int size) {
-  int const24 = 1;
-  xmlParserInputBuffer* var34 = xmlParserInputBufferCreateStatic(data, size, const24);
+  xmlInitParser();
   traffic_assert(true);
-  char* null37 = NULL;
-  xmlDoc* var66 = xmlNewDoc(null37);
-  traffic_assert(true);
+  xmlParserCtxt* var69 = xmlNewParserCtxt();
+  if (!((var69 == NULL))) {
+    traffic_assert(true);
+    xmlFreeParserCtxt(var69);
+  }
 }

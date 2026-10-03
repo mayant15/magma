@@ -9,13 +9,44 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_2(char* data, int size) {
-  int const24 = 1;
-  xmlParserInputBuffer* var34 = xmlParserInputBufferCreateStatic(data, size, const24);
-  traffic_assert(true);
   xmlInitParser();
   traffic_assert(true);
-  xmlNs* null72 = NULL;
-  TF_String const73 = "5qqef";
-  xmlNode* var97 = xmlNewNode(null72, const73);
+  int const59 = 1;
+  xmlParserInputBuffer* var69 = xmlParserInputBufferCreateStatic(data, size, const59);
   traffic_assert(true);
+  if (!((var69 == NULL))) {
+    traffic_assert(true);
+    char* null98 = NULL;
+    xmlTextReader* var106 = xmlNewTextReader(var69, null98);
+    if (!((var106 == NULL))) {
+      traffic_assert(true);
+      traffic_assert(true);
+      traffic_assert(true);
+      int var147 = xmlTextReaderRead(var106);
+      if ((var147 == 1)) {
+        traffic_assert(true);
+        char* var186 = xmlTextReaderConstName(var106);
+        traffic_assert(true);
+        char* var298 = xmlTextReaderConstName(var106);
+        traffic_assert(true);
+        int var371 = xmlTextReaderNodeType(var106);
+      } else if ((var147 == 0)) {
+        traffic_assert(true);
+      } else if (true) {
+        traffic_assert(true);
+        char* var223 = xmlTextReaderConstName(var106);
+        traffic_assert(true);
+        int var260 = xmlTextReaderIsEmptyElement(var106);
+        if ((var260 == -1)) {
+          traffic_assert(true);
+          int var335 = xmlTextReaderNodeType(var106);
+        } else if (true) {
+          traffic_assert(true);
+        }
+      }
+    } else if ((var106 == NULL)) {
+      traffic_assert(true);
+      traffic_assert(true);
+    }
+  }
 }

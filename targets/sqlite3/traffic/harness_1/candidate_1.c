@@ -9,16 +9,26 @@ int fuzz_1(char* data, int size) {
   traffic_assert(true);
   if ((var9 == 0)) {
     traffic_assert(true);
-    int const30 = 0;
-    int const32 = 0;
-    int var44 = sqlite3_limit((*out2), const30, const32);
-    traffic_assert(true);
-    int const52 = 0;
-    int const54 = -1;
-    int var66 = sqlite3_limit((*out2), const52, const54);
-    traffic_assert(true);
+    sqlite3_stmt* out27_slot; sqlite3_stmt** out27 = &out27_slot;
+    char* out28_slot; char** out28 = &out28_slot;
+    int var33 = sqlite3_prepare_v2((*out2), data, size, out27, out28);
+    if ((var33 == 0)) {
+      traffic_assert(true);
+      traffic_assert(true);
+      traffic_assert(true);
+      int var72 = sqlite3_finalize((*out27));
+      traffic_assert(true);
+      int var105 = sqlite3_close((*out2));
+    } else if (!((var33 == 0))) {
+      traffic_assert(true);
+      traffic_assert(true);
+      int const45 = 0;
+      int const47 = 1;
+      int var54 = sqlite3_limit((*out2), const45, const47);
+      traffic_assert(true);
+      int var89 = sqlite3_close((*out2));
+    }
   } else if (!((var9 == 0))) {
     traffic_assert(true);
-    int var23 = sqlite3_close((*out2));
   }
 }

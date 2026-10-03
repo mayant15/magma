@@ -10,7 +10,21 @@
 
 int fuzz_1(char* data, int size) {
   xmlInitParser();
-  xmlNode out98_slot; xmlNode* out98 = &out98_slot;
-  int var152 = xmlChildElementCount(out98);
+  xmlDoc* null79 = NULL;
+  xmlFreeDoc(null79);
+  traffic_assert(true);
+  xmlTextReader* null218 = NULL;
+  xmlFreeTextReader(null218);
+  traffic_assert(true);
+  xmlNode* null247 = NULL;
+  xmlFreeNode(null247);
+  traffic_assert(true);
+  xmlNode out333_slot; xmlNode* out333 = &out333_slot;
+  bool var383 = xmlIsBlankNode(out333);
+  traffic_assert(true);
+  xmlParserInputBuffer* null444 = NULL;
+  xmlFreeParserInputBuffer(null444);
+  traffic_assert(true);
+  int var538 = xmlTextReaderDepth(null218);
   traffic_assert(true);
 }

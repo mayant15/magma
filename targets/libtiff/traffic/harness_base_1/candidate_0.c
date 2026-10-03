@@ -5,8 +5,7 @@
 #include <tiffio.h>
 
 int fuzz_0(uint8_t* data, int size) {
-  int const2 = 0;
-  TIFF* var24 = tiff_open_r(data, const2);
-  traffic_assert(true);
+  TIFF* var24 = tiff_open_w();
+  TIFFClose(var24);
   traffic_assert(true);
 }

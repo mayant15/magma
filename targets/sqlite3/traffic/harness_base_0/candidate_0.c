@@ -3,13 +3,15 @@
 #include <sqlite3.h>
 
 int fuzz_0(char* data, int size) {
-  sqlite3_stmt* null27 = NULL;
-  int var28 = sqlite3_reset(null27);
-  traffic_assert(true);
-  sqlite3* null37 = NULL;
-  int const40 = -1;
-  int var58 = sqlite3_limit(null37, size, const40);
+  sqlite3* null7 = NULL;
+  int const10 = -1;
+  int var28 = sqlite3_limit(null7, size, const10);
   traffic_assert(true);
   traffic_assert(true);
+  traffic_assert(true);
+  int var60 = sqlite3_close(null7);
+  traffic_assert(true);
+  sqlite3_stmt* null89 = NULL;
+  int var90 = sqlite3_reset(null89);
   traffic_assert(true);
 }

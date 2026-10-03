@@ -12,10 +12,15 @@ int fuzz_1(char* data, int size) {
     sqlite3_stmt* out27_slot; sqlite3_stmt** out27 = &out27_slot;
     char* out28_slot; char** out28 = &out28_slot;
     int var33 = sqlite3_prepare_v2((*out2), data, size, out27, out28);
-    TF_String const34 = ":memory:";
-    sqlite3* out36_slot; sqlite3** out36 = &out36_slot;
-    int var43 = sqlite3_open(const34, out36);
-    traffic_assert(true);
+    if ((var33 == 0)) {
+      traffic_assert(true);
+      traffic_assert(true);
+      traffic_assert(true);
+    } else if (!((var33 == 0))) {
+      traffic_assert(true);
+      traffic_assert(true);
+      int var54 = sqlite3_close((*out2));
+    }
   } else if (!((var9 == 0))) {
     traffic_assert(true);
   }

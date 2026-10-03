@@ -9,9 +9,12 @@
 #include "harness_base_1/candidate_5.c"
 #include "harness_base_1/candidate_6.c"
 #include "harness_base_1/candidate_7.c"
+#include "harness_base_1/candidate_8.c"
+#include "harness_base_1/candidate_9.c"
+#include "harness_base_1/candidate_10.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 8
+#define NUM_CANDIDATES 11
 
 int main(int argc, char* argv[]) {
     FILE *f;
@@ -57,5 +60,8 @@ int main(int argc, char* argv[]) {
     case 5: return fuzz_5(rest_ptr, rest_len);
     case 6: return fuzz_6(rest_ptr, rest_len);
     case 7: return fuzz_7(rest_ptr, rest_len);
+    case 8: return fuzz_8(rest_ptr, rest_len);
+    case 9: return fuzz_9(rest_ptr, rest_len);
+    case 10: return fuzz_10(rest_ptr, rest_len);
   }
 }

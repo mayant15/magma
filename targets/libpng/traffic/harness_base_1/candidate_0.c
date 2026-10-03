@@ -5,35 +5,19 @@
 #include <png.h>
 
 int fuzz_0(uint8_t* data, int size) {
-  png_image* var20 = png_fuzz_new_image();
-  png_image* null40 = NULL;
-  png_image_free(null40);
-  traffic_assert(true);
-  png_image_free(var20);
-  traffic_assert(true);
-  int const69 = 1;
-  int var83 = png_image_begin_read_from_memory(var20, data, const69);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  png_color* null98 = NULL;
-  uint8_t out99_slot; uint8_t* out99 = &out99_slot;
-  uint8_t* null104 = NULL;
-  int var107 = png_image_finish_read(var20, null98, out99, const69, null104);
+  png_image* null9 = NULL;
+  png_color* null11 = NULL;
+  uint8_t out16_slot; uint8_t* out16 = &out16_slot;
+  int var20 = png_image_finish_read(null9, null11, data, size, out16);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);
-  png_color* null124 = NULL;
-  int var133 = png_image_finish_read(var20, null124, null104, var83, out99);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  traffic_assert(true);
-  png_image* null142 = NULL;
-  int var159 = png_image_begin_read_from_memory(null142, data, size);
+  png_image* null29 = NULL;
+  uint8_t out30_slot; uint8_t* out30 = &out30_slot;
+  int const32 = 0;
+  int var46 = png_image_begin_read_from_memory(null29, out30, const32);
   traffic_assert(true);
   traffic_assert(true);
   traffic_assert(true);

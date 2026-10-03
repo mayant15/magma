@@ -9,12 +9,16 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_1(char* data, int size) {
-  xmlNode* null13 = NULL;
-  xmlNode* null15 = NULL;
-  xmlNode* var76 = xmlAddChild(null13, null15);
+  xmlDoc* null21 = NULL;
+  xmlNode* var76 = xmlDocGetRootElement(null21);
+  traffic_assert(true);
+  xmlNode* null101 = NULL;
+  int var154 = xmlChildElementCount(null101);
+  traffic_assert(true);
+  bool var232 = xmlNodeIsText(null101);
+  traffic_assert(true);
+  xmlParserInputBuffer* var310 = xmlParserInputBufferCreateStatic(data, var154, size);
   traffic_assert(true);
   traffic_assert(true);
-  xmlDoc* null100 = NULL;
-  xmlNode* var155 = xmlDocGetRootElement(null100);
   traffic_assert(true);
 }

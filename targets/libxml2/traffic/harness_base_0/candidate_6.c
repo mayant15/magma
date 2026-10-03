@@ -10,29 +10,27 @@
 
 int fuzz_6(char* data, int size) {
   xmlInitParser();
-  xmlTextReader* null141 = NULL;
-  xmlFreeTextReader(null141);
+  xmlDoc* null79 = NULL;
+  xmlFreeDoc(null79);
   traffic_assert(true);
-  int var229 = xmlTextReaderRead(null141);
+  xmlTextReader* null218 = NULL;
+  xmlFreeTextReader(null218);
   traffic_assert(true);
-  xmlParserInputBuffer* null290 = NULL;
-  xmlFreeParserInputBuffer(null290);
+  xmlNode* null247 = NULL;
+  xmlFreeNode(null247);
   traffic_assert(true);
-  xmlDoc* null329 = NULL;
-  xmlNode* var384 = xmlDocGetRootElement(null329);
+  xmlNode out333_slot; xmlNode* out333 = &out333_slot;
+  bool var383 = xmlIsBlankNode(out333);
   traffic_assert(true);
-  xmlNode* null405 = NULL;
-  xmlUnlinkNode(null405);
+  xmlParserInputBuffer* null444 = NULL;
+  xmlFreeParserInputBuffer(null444);
   traffic_assert(true);
-  xmlNode* null480 = NULL;
-  xmlFreeNode(null480);
+  xmlParserCtxt* var538 = xmlNewParserCtxt();
+  int const595 = -1;
+  xmlParserInputBuffer* var615 = xmlParserInputBufferCreateStatic(data, size, const595);
   traffic_assert(true);
-  xmlDoc* null543 = NULL;
-  xmlFreeDoc(null543);
   traffic_assert(true);
-  xmlNs out625_slot; xmlNs* out625 = &out625_slot;
-  TF_String const627 = "uM1APi";
-  xmlNode* var693 = xmlNewNode(out625, const627);
   traffic_assert(true);
+  xmlFreeParserCtxt(var538);
   traffic_assert(true);
 }

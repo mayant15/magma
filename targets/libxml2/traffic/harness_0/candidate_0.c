@@ -9,8 +9,13 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_0(char* data, int size) {
-  xmlNs* null5 = NULL;
-  TF_String const6 = "N9dAPT$";
-  xmlNode* var34 = xmlNewNode(null5, const6);
+  int const24 = 1;
+  xmlParserInputBuffer* var34 = xmlParserInputBufferCreateStatic(data, size, const24);
   traffic_assert(true);
+  if (!((var34 == NULL))) {
+    traffic_assert(true);
+    xmlFreeParserInputBuffer(var34);
+    xmlInitParser();
+    traffic_assert(true);
+  }
 }

@@ -9,31 +9,22 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_4(char* data, int size) {
-  xmlNs* null9 = NULL;
-  TF_String const10 = "HfTgrKZsb";
-  xmlNode* var76 = xmlNewNode(null9, const10);
+  xmlTextReader* null67 = NULL;
+  int var76 = xmlTextReaderRead(null67);
+  traffic_assert(true);
+  xmlNode out104_slot; xmlNode* out104 = &out104_slot;
+  bool var154 = xmlIsBlankNode(out104);
+  traffic_assert(true);
+  xmlInitParser();
+  xmlNode out260_slot; xmlNode* out260 = &out260_slot;
+  char* var308 = xmlNodeGetContent(out260);
+  traffic_assert(true);
+  xmlNode* null341 = NULL;
+  TF_String const342 = "EZ10O";
+  char* var386 = xmlGetProp(null341, const342);
   traffic_assert(true);
   traffic_assert(true);
-  xmlParserInputBuffer* null140 = NULL;
-  xmlTextReader* var155 = xmlNewTextReader(null140, data);
-  traffic_assert(true);
-  traffic_assert(true);
-  xmlUnlinkNode(var76);
-  traffic_assert(true);
-  xmlNode* null264 = NULL;
-  char* var311 = xmlNodeGetContent(null264);
-  traffic_assert(true);
-  xmlParserCtxt* var389 = xmlNewParserCtxt();
-  xmlDoc* var466 = xmlNewDoc(var311);
-  traffic_assert(true);
-  xmlNode out502_slot; xmlNode* out502 = &out502_slot;
-  xmlAttr* var544 = xmlHasProp(out502, const10);
-  traffic_assert(true);
-  traffic_assert(true);
-  xmlNode* null578 = NULL;
-  char* var623 = xmlGetProp(null578, const10);
-  traffic_assert(true);
-  traffic_assert(true);
-  char* var702 = xmlNodeGetContent(var76);
+  xmlTextReader* null454 = NULL;
+  xmlFreeTextReader(null454);
   traffic_assert(true);
 }

@@ -9,27 +9,15 @@
 #include <libxml/xmlreader.h>
 
 int fuzz_3(char* data, int size) {
-  xmlNs* null9 = NULL;
-  TF_String const10 = "HfTgrKZsb";
-  xmlNode* var76 = xmlNewNode(null9, const10);
+  xmlTextReader* null67 = NULL;
+  int var76 = xmlTextReaderRead(null67);
   traffic_assert(true);
+  xmlNode out104_slot; xmlNode* out104 = &out104_slot;
+  bool var154 = xmlIsBlankNode(out104);
   traffic_assert(true);
-  xmlTextReader* null154 = NULL;
-  char* var155 = xmlTextReaderConstName(null154);
+  xmlInitParser();
+  char* var308 = xmlTextReaderConstName(null67);
   traffic_assert(true);
-  xmlParserInputBuffer* null216 = NULL;
-  xmlFreeParserInputBuffer(null216);
-  traffic_assert(true);
-  bool var310 = xmlIsBlankNode(var76);
-  traffic_assert(true);
-  int var388 = xmlTextReaderRead(null154);
-  traffic_assert(true);
-  xmlNode* null407 = NULL;
-  xmlFreeNode(null407);
-  traffic_assert(true);
-  int const521 = -1;
-  xmlParserInputBuffer* var543 = xmlParserInputBufferCreateStatic(var155, const521, var388);
-  traffic_assert(true);
-  traffic_assert(true);
+  int var386 = xmlChildElementCount(out104);
   traffic_assert(true);
 }

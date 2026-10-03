@@ -6,12 +6,9 @@
 
 int fuzz_0(uint8_t* data, int size) {
   TIFF* var9 = tiff_open_r(data, size);
-  TIFF* var17 = tiff_open_w();
   if (!((var9 == NULL))) {
     traffic_assert(true);
-    int var26 = tiff_fuzz_read_strip(var9);
-    traffic_assert(true);
-    int var35 = tiff_fuzz_read_strip(var9);
+    int var18 = tiff_fuzz_read_rgba(var9);
     traffic_assert(true);
     TIFFClose(var9);
   } else if ((var9 == NULL)) {

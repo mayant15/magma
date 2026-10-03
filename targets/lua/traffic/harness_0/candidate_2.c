@@ -8,20 +8,19 @@ int fuzz_2(char* data, int size) {
   lua_State* var10 = luaL_newstate();
   if (!((var10 == NULL))) {
     traffic_assert(true);
-    lua_pushboolean(var10, size);
+    TF_String const16 = "24#pNeszKRq6sjXjD";
+    TF_String const18 = "t";
+    int var38 = luaL_loadbufferx(var10, data, size, const16, const18);
     traffic_assert(true);
-    int const67 = 1;
-    size_t* null70 = NULL;
-    char* var71 = lua_tolstring(var10, const67, null70);
-    traffic_assert(true);
-    int const88 = 0;
-    lua_settop(var10, const88);
-    traffic_assert(true);
-    int const114 = 0;
-    lua_settop(var10, const114);
-    traffic_assert(true);
-    int var143 = lua_gettop(var10);
-    traffic_assert(true);
-    traffic_assert(true);
+    int const43 = 0;
+    int const45 = 1;
+    int const49 = 0;
+    void* null52 = NULL;
+    if ((var38 == 0)) {
+      int var68 = lua_pcallk(var10, const43, const45, var38, const49, null52);
+      traffic_assert(true);
+      lua_close(var10);
+    } else {
+    }
   }
 }
