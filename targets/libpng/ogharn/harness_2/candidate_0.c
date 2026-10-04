@@ -7,11 +7,8 @@
 #include <png-support.h>
 
 int fuzz_0(char* fuzzData, long size) {
-   png_const_colorp png_image_finish_readvar1;
-	memset(&png_image_finish_readvar1, 0, sizeof(png_image_finish_readvar1));
-
    void* png_image_finish_readvar2[size+1];
-	sprintf(png_image_finish_readvar2, "/tmp/ex06f");
+	sprintf(png_image_finish_readvar2, "/tmp/kuvcq");
    png_int_32 png_image_finish_readvar3;
 	memset(&png_image_finish_readvar3, 0, sizeof(png_image_finish_readvar3));
 
@@ -20,7 +17,7 @@ int fuzz_0(char* fuzzData, long size) {
 	if((int)png_image_begin_read_from_memoryval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int png_image_finish_readval1 = png_image_finish_read(png_fuzz_new_imageval1, png_image_finish_readvar1, png_image_finish_readvar2, png_image_finish_readvar3, (void*)&fuzzData);
+   int png_image_finish_readval1 = png_image_finish_read(png_fuzz_new_imageval1, NULL, png_image_finish_readvar2, png_image_finish_readvar3, (void*)&fuzzData);
 	if((int)png_image_finish_readval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}

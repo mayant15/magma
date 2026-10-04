@@ -1,4 +1,5 @@
 #include <stdint.h>
+#include <stdio.h>
 
 #include "harness_0/candidate_0.c"
 #include "harness_0/candidate_1.c"
@@ -29,10 +30,9 @@
 #include "harness_0/candidate_26.c"
 #include "harness_0/candidate_27.c"
 #include "harness_0/candidate_28.c"
-#include "harness_0/candidate_29.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 30
+#define NUM_CANDIDATES 29
 
 int main(int argc, char *argv[])
 {
@@ -100,6 +100,5 @@ int main(int argc, char *argv[])
       case 26: return fuzz_26(rest_ptr, rest_len);
       case 27: return fuzz_27(rest_ptr, rest_len);
       case 28: return fuzz_28(rest_ptr, rest_len);
-      case 29: return fuzz_29(rest_ptr, rest_len);
     }
 }

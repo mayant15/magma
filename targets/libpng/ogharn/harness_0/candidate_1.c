@@ -12,7 +12,7 @@ int fuzz_1(char* fuzzData, long size) {
 	if((int)png_image_begin_read_from_memoryval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int png_image_finish_readval1 = png_image_finish_read(png_fuzz_new_imageval1, NULL, NULL, sizeof(NULL), NULL);
+   int png_image_finish_readval1 = png_image_finish_read(png_fuzz_new_imageval1, NULL, NULL, sizeof(NULL), (void*)&fuzzData);
 	if((int)png_image_finish_readval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}

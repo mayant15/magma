@@ -23,16 +23,16 @@ int fuzz_0(char* fuzzData, long size) {
 	if((int)sf_init_fileval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sf_fuzz_readf_intval1 = sf_fuzz_readf_int(sf_init_filevar2, 64);
+   int sf_current_byterateval1 = sf_current_byterate(sf_init_filevar2);
+	if((int)sf_current_byterateval1 < 0){
+		fprintf(stderr, "err");
+		exit(0);	}
+   int sf_fuzz_readf_intval1 = sf_fuzz_readf_int(sf_init_filevar2, sf_current_byterateval1);
 	if((int)sf_fuzz_readf_intval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sf_fuzz_writef_intval1 = sf_fuzz_writef_int(sf_init_filevar2, sf_fuzz_readf_intval1);
-	if((int)sf_fuzz_writef_intval1 < 0){
-		fprintf(stderr, "err");
-		exit(0);	}
-   int sf_fuzz_readf_doubleval1 = sf_fuzz_readf_double(sf_init_filevar2, sf_fuzz_readf_intval1);
-	if((int)sf_fuzz_readf_doubleval1 < 0){
+   int sf_closeval1 = sf_close(sf_init_filevar2);
+	if((int)sf_closeval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
    return 0;

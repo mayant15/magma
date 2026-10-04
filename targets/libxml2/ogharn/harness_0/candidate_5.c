@@ -11,11 +11,8 @@
 
 int fuzz_5(char* fuzzData, long size) {
    char* xmlCtxtReadMemoryvar3[size+1];
-	sprintf(xmlCtxtReadMemoryvar3, "/tmp/44pj2");
-   char* xmlCtxtReadMemoryvar4[size+1];
-	sprintf(xmlCtxtReadMemoryvar4, "/tmp/2m6gj");
+	sprintf(xmlCtxtReadMemoryvar3, "/tmp/uiuuu");
    xmlParserCtxtPtr xmlNewParserCtxtval1 = xmlNewParserCtxt();
-   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, XML_DETECT_IDS, xmlCtxtReadMemoryvar3, xmlCtxtReadMemoryvar4, XML_SAX2_MAGIC);
-   xmlDocPtr xmlCopyDocval1 = xmlCopyDoc(xmlCtxtReadMemoryval1, XML_SKIP_IDS);
+   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData+size, 0, xmlCtxtReadMemoryvar3, fuzzData, size);
    return 0;
 }

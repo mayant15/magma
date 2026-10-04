@@ -8,7 +8,7 @@
 
 int fuzz_9(char* fuzzData, long size) {
    char* luaL_loadbufferxvar4[size+1];
-	sprintf(luaL_loadbufferxvar4, "/tmp/p5fdc");
+	sprintf(luaL_loadbufferxvar4, "/tmp/xupxy");
    lua_KContext lua_pcallkvar4;
 	memset(&lua_pcallkvar4, 0, sizeof(lua_pcallkvar4));
 
@@ -28,6 +28,6 @@ int fuzz_9(char* fuzzData, long size) {
 	if(!lua_tolstringval1){
 		fprintf(stderr, "err");
 		exit(0);	}
-   lua_pushboolean(luaL_newstateval1, lua_pcallkval1);
+   lua_settop(luaL_newstateval1, 0);
    return 0;
 }

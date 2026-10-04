@@ -32,7 +32,7 @@ MARKER_RE = re.compile(r"""fuzzData\[size\] = '\\0';""")
 MAIN_RE = re.compile(r"^int\s+main\s*\(")
 HARNESS_NUM_RE = re.compile(r"^harness(\d+):")
 
-LIBS = ["libpng", "libsndfile", "libtiff", "libxml2", "lua", "sqlite3"]
+LIBS = ["libpng", "libsndfile", "libtiff", "libxml2", "lua", "sqlite3", "openssl"]
 
 DISPATCHER_TEMPLATE = """#include <stdint.h>
 #include <stdio.h>

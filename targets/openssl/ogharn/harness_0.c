@@ -1,13 +1,15 @@
 #include <stdint.h>
+#include <stdio.h>
 
 #include "harness_0/candidate_0.c"
+#include "harness_0/candidate_1.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 1
+#define NUM_CANDIDATES 2
 
 int main(int argc, char *argv[])
 {
-	  FILE *f;
+    FILE *f;
     char *fuzzData = NULL;
     long size;
 
@@ -43,5 +45,6 @@ int main(int argc, char *argv[])
 
     switch (index % NUM_CANDIDATES) {
       case 0: return fuzz_0(rest_ptr, rest_len);
+      case 1: return fuzz_1(rest_ptr, rest_len);
     }
 }

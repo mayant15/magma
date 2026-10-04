@@ -11,7 +11,7 @@
 
 int fuzz_1(char* fuzzData, long size) {
    xmlParserCtxtPtr xmlNewParserCtxtval1 = xmlNewParserCtxt();
-   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, size, fuzzData, NULL, XML_COMPLETE_ATTRS);
-   xmlFreeDoc(xmlCtxtReadMemoryval1);
+   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, XML_DETECT_IDS, NULL, fuzzData, size);
+   xmlFreeParserCtxt(xmlNewParserCtxtval1);
    return 0;
 }

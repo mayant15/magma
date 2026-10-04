@@ -8,7 +8,7 @@
 
 int fuzz_4(char* fuzzData, long size) {
    char* luaL_loadbufferxvar4[size+1];
-	sprintf(luaL_loadbufferxvar4, "/tmp/d9hr7");
+	sprintf(luaL_loadbufferxvar4, "/tmp/jzweq");
    lua_KContext lua_pcallkvar4;
 	memset(&lua_pcallkvar4, 0, sizeof(lua_pcallkvar4));
 

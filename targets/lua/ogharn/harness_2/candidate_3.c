@@ -8,7 +8,7 @@
 
 int fuzz_3(char* fuzzData, long size) {
    char* luaL_loadbufferxvar4[size+1];
-	sprintf(luaL_loadbufferxvar4, "/tmp/r7okh");
+	sprintf(luaL_loadbufferxvar4, "/tmp/8he2e");
    lua_State* luaL_newstateval1 = luaL_newstate();
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");

@@ -8,10 +8,10 @@
 #include <x509-support.h>
 
 int fuzz_0(char* fuzzData, long size) {
-  X509* d2i_X509val1 = d2i_X509(NULL, &fuzzData, size);
-  if(!d2i_X509val1){
-    fprintf(stderr, "err");
-    exit(0);	}
-  X509_free(d2i_X509val1);
-  return 0;
+   X509* d2i_X509val1 = d2i_X509(NULL, &fuzzData, size);
+	if(!d2i_X509val1){
+		fprintf(stderr, "err");
+		exit(0);	}
+   X509_free(d2i_X509val1);
+   return 0;
 }

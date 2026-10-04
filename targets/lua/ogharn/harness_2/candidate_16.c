@@ -8,7 +8,7 @@
 
 int fuzz_16(char* fuzzData, long size) {
    char* luaL_loadbufferxvar4[size+1];
-	sprintf(luaL_loadbufferxvar4, "/tmp/ed60d");
+	sprintf(luaL_loadbufferxvar4, "/tmp/iu48m");
    lua_State* luaL_newstateval1 = luaL_newstate();
 	if(!luaL_newstateval1){
 		fprintf(stderr, "err");
@@ -17,9 +17,9 @@ int fuzz_16(char* fuzzData, long size) {
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   lua_close(luaL_newstateval1);
-   int lua_gettopval1 = lua_gettop(luaL_newstateval1);
-	if((int)lua_gettopval1 < 0){
+   lua_pushnil(luaL_newstateval1);
+   char* lua_tolstringval1 = lua_tolstring(luaL_newstateval1, luaL_loadbufferxval1, NULL);
+	if(!lua_tolstringval1){
 		fprintf(stderr, "err");
 		exit(0);	}
    return 0;

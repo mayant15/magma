@@ -6,8 +6,11 @@
 #include <lua.h>
 #include <lauxlib.h>
 
+static int function_pointer3458764514880651264fp(lua_State* arg0, int arg1, lua_KContext arg2){
+	exit(0);
+}
+
 int fuzz_5(char* fuzzData, long size) {
-   int lua_pcallkvar2 = 1;
    lua_KContext lua_pcallkvar4;
 	memset(&lua_pcallkvar4, 0, sizeof(lua_pcallkvar4));
 
@@ -19,7 +22,7 @@ int fuzz_5(char* fuzzData, long size) {
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, LUA_TNIL, lua_pcallkvar2, LUA_YIELD, lua_pcallkvar4, NULL);
+   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, 1, 0, 1, lua_pcallkvar4, function_pointer3458764514880651264fp);
 	if((int)lua_pcallkval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
