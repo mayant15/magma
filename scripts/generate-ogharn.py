@@ -32,6 +32,13 @@ MARKER_RE = re.compile(r"""fuzzData\[size\] = '\\0';""")
 MAIN_RE = re.compile(r"^int\s+main\s*\(")
 HARNESS_NUM_RE = re.compile(r"^harness(\d+):")
 
+# OGHarn sometimes emits a `static int function_pointerXYZfp(...)` stub (used as a
+# lua_pcallk-style continuation callback) with the *same* name in multiple mined
+# harnesses. Since every candidate in an out-dir is #include'd into one dispatcher
+# translation unit, identical static names collide at compile time. Detect them per
+# candidate and rename to a candidate-unique name.
+FUNCTION_POINTER_DEF_RE = re.compile(r"^static\s+[\w\s\*]+?\b(function_pointer\w*)\s*\(")
+
 LIBS = ["libpng", "libsndfile", "libtiff", "libxml2", "lua", "sqlite3", "openssl"]
 
 DISPATCHER_TEMPLATE = """#include <stdint.h>
@@ -130,8 +137,29 @@ def split_original(path: Path):
     return prefix_lines, body_lines
 
 
+def rename_colliding_function_pointers(prefix_lines: list, body_lines: list, k: int):
+    """Rename any `static ... function_pointerXYZ(...)` stub to a name unique to
+    candidate k, rewriting both lines lists in place to match."""
+    names = set()
+    for line in prefix_lines:
+        m = FUNCTION_POINTER_DEF_RE.match(line.strip())
+        if m:
+            names.add(m.group(1))
+
+    def rename_all(lines):
+        for name in names:
+            new_name = f"{name}_cand{k}"
+            name_re = re.compile(rf"\b{re.escape(name)}\b")
+            for i, line in enumerate(lines):
+                lines[i] = name_re.sub(new_name, line)
+
+    rename_all(prefix_lines)
+    rename_all(body_lines)
+
+
 def make_candidate(path: Path, k: int) -> str:
     prefix_lines, body_lines = split_original(path)
+    rename_colliding_function_pointers(prefix_lines, body_lines, k)
     out = []
     out.extend(prefix_lines)
     out.append("")
