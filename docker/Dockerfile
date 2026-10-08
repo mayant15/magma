@@ -5,11 +5,12 @@ FROM ubuntu:18.04
 
 RUN apt-get update && apt-get install -y sudo ca-certificates
 
-# Optionally trust an extra CA (base64-encoded PEM), e.g. for networks with a
+# Optionally trust extra CAs (base64-encoded PEM, may hold several certs), e.g. for networks with a
 # TLS-intercepting proxy. No-op when unset.
 ARG EXTRA_CA_B64
 RUN if [ -n "${EXTRA_CA_B64}" ]; then \
-		echo "${EXTRA_CA_B64}" | base64 -d > /usr/local/share/ca-certificates/extra-ca.crt && \
+		echo "${EXTRA_CA_B64}" | base64 -d | \
+			awk '/BEGIN CERT/{n++} {print > "/usr/local/share/ca-certificates/extra-ca-" n ".crt"}' && \
 		update-ca-certificates; \
 	fi
 
