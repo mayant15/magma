@@ -3,7 +3,15 @@ FROM ubuntu:18.04
 # TODO remove sudo for user "magma" to avoid unwanted priv escalation from
 # other attack vectors.
 
-RUN apt-get update && apt-get install -y sudo
+RUN apt-get update && apt-get install -y sudo ca-certificates
+
+# Optionally trust an extra CA (base64-encoded PEM), e.g. for networks with a
+# TLS-intercepting proxy. No-op when unset.
+ARG EXTRA_CA_B64
+RUN if [ -n "${EXTRA_CA_B64}" ]; then \
+		echo "${EXTRA_CA_B64}" | base64 -d > /usr/local/share/ca-certificates/extra-ca.crt && \
+		update-ca-certificates; \
+	fi
 
 ## Magma directory hierarchy
 # magma_root is relative to the docker-build's working directory

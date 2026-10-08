@@ -8,6 +8,7 @@
 # + env HARNESSES: path to custom harnesses (default: unset)
 # + env ISAN: if set, build the benchmark with ISAN/fatal canaries (default: unset)
 # + env HARDEN: if set, build the benchmark with hardened canaries (default: unset)
+# + env EXTRA_CA_FILE: PEM file of an extra CA to trust inside the Docker build (default: unset)
 # + env ARC: if set, build Apptainer containers for ARC instead of Docker (default: unset)
 ##
 
@@ -39,6 +40,9 @@ if [ ! -z $ISAN ]; then
 fi
 if [ ! -z $HARDEN ]; then
     harden_flag="--build-arg harden=1"
+fi
+if [ ! -z "$EXTRA_CA_FILE" ]; then
+  ca_flag="--build-arg EXTRA_CA_B64=$(base64 -w0 "$EXTRA_CA_FILE")"
 fi
 if [ ! -z $HARNESSES ]; then
   harness_flag="--build-arg HARNESSES=$HARNESSES"
@@ -77,7 +81,7 @@ else
   docker build -t "$IMG_NAME" \
       --build-arg fuzzer_name="$FUZZER" \
       --build-arg target_name="$TARGET" \
-      $mode_flag $isan_flag $harden_flag $harness_flag \
+      $mode_flag $isan_flag $harden_flag $harness_flag $ca_flag \
       -f "$MAGMA/docker/Dockerfile" "$MAGMA"
 fi
 
