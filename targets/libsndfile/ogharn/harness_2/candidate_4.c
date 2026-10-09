@@ -19,17 +19,21 @@ int fuzz_4(char* fuzzData, long size) {
    SF_INFO sf_init_filevar5;
 	memset(&sf_init_filevar5, 0, sizeof(sf_init_filevar5));
 
+   sf_count_t sf_seekvar1;
+	memset(&sf_seekvar1, 0, sizeof(sf_seekvar1));
+
    int sf_init_fileval1 = sf_init_file(fuzzData, size, &sf_init_filevar2, &sf_init_filevar3, &sf_init_filevar4, &sf_init_filevar5);
 	if((int)sf_init_fileval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sf_current_byterateval1 = sf_current_byterate(sf_init_filevar2);
-	if((int)sf_current_byterateval1 < 0){
+   sf_count_t sf_seekval1 = sf_seek(sf_init_filevar2, sf_seekvar1, sf_init_fileval1);
+	if((int)sf_seekval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sf_fuzz_readf_doubleval1 = sf_fuzz_readf_double(sf_init_filevar2, sf_current_byterateval1);
-	if((int)sf_fuzz_readf_doubleval1 < 0){
+   SF_CHUNK_ITERATOR* sf_get_chunk_iteratorval1 = sf_get_chunk_iterator(sf_init_filevar2, NULL);
+	if(!sf_get_chunk_iteratorval1){
 		fprintf(stderr, "err");
 		exit(0);	}
+   int sf_fuzz_get_chunk_dataval1 = sf_fuzz_get_chunk_data(sf_get_chunk_iteratorval1);
    return 0;
 }

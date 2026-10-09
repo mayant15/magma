@@ -6,9 +6,13 @@
 #include <lua.h>
 #include <lauxlib.h>
 
+static int function_pointer3458764515342024704fp_cand9(lua_State* arg0, int arg1, lua_KContext arg2){
+	exit(0);
+}
+
 int fuzz_9(char* fuzzData, long size) {
    char* luaL_loadbufferxvar4[size+1];
-	sprintf(luaL_loadbufferxvar4, "/tmp/xupxy");
+	sprintf(luaL_loadbufferxvar4, "/tmp/ejwsv");
    lua_KContext lua_pcallkvar4;
 	memset(&lua_pcallkvar4, 0, sizeof(lua_pcallkvar4));
 
@@ -20,14 +24,14 @@ int fuzz_9(char* fuzzData, long size) {
 	if((int)luaL_loadbufferxval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, 1, 0, 1, lua_pcallkvar4, NULL);
+   int lua_pcallkval1 = lua_pcallk(luaL_newstateval1, LUA_GCSTOP, luaL_loadbufferxval1, LUA_OPSHR, lua_pcallkvar4, function_pointer3458764515342024704fp_cand9);
 	if((int)lua_pcallkval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   char* lua_tolstringval1 = lua_tolstring(luaL_newstateval1, luaL_loadbufferxval1, NULL);
+   char* lua_tolstringval1 = lua_tolstring(luaL_newstateval1, 1, NULL);
 	if(!lua_tolstringval1){
 		fprintf(stderr, "err");
 		exit(0);	}
-   lua_settop(luaL_newstateval1, 0);
+   lua_close(luaL_newstateval1);
    return 0;
 }

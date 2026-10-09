@@ -10,9 +10,10 @@
 #include <libxml/xmlIO.h>
 
 int fuzz_9(char* fuzzData, long size) {
-   char* xmlCtxtReadMemoryvar1[size+1];
-	sprintf(xmlCtxtReadMemoryvar1, "/tmp/orzyq");
+   int xmlCtxtReadMemoryvar2 = 1;
+   char* xmlCtxtReadMemoryvar3[size+1];
+	sprintf(xmlCtxtReadMemoryvar3, "/tmp/f433s");
    xmlParserCtxtPtr xmlNewParserCtxtval1 = xmlNewParserCtxt();
-   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, xmlCtxtReadMemoryvar1, sizeof(xmlCtxtReadMemoryvar1), fuzzData+size, fuzzData, -1);
+   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, xmlCtxtReadMemoryvar2, xmlCtxtReadMemoryvar3, fuzzData+size, size);
    return 0;
 }

@@ -30,9 +30,35 @@
 #include "harness_2/candidate_26.c"
 #include "harness_2/candidate_27.c"
 #include "harness_2/candidate_28.c"
+#include "harness_2/candidate_29.c"
+#include "harness_2/candidate_30.c"
+#include "harness_2/candidate_31.c"
+#include "harness_2/candidate_32.c"
+#include "harness_2/candidate_33.c"
+#include "harness_2/candidate_34.c"
+#include "harness_2/candidate_35.c"
+#include "harness_2/candidate_36.c"
+#include "harness_2/candidate_37.c"
+#include "harness_2/candidate_38.c"
+#include "harness_2/candidate_39.c"
+#include "harness_2/candidate_40.c"
+#include "harness_2/candidate_41.c"
+#include "harness_2/candidate_42.c"
+#include "harness_2/candidate_43.c"
+#include "harness_2/candidate_44.c"
+#include "harness_2/candidate_45.c"
+#include "harness_2/candidate_46.c"
+#include "harness_2/candidate_47.c"
+#include "harness_2/candidate_48.c"
+#include "harness_2/candidate_49.c"
+#include "harness_2/candidate_50.c"
+#include "harness_2/candidate_51.c"
+#include "harness_2/candidate_52.c"
+#include "harness_2/candidate_53.c"
+#include "harness_2/candidate_54.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 29
+#define NUM_CANDIDATES 55
 
 int main(int argc, char *argv[])
 {
@@ -100,5 +126,31 @@ int main(int argc, char *argv[])
       case 26: return fuzz_26(rest_ptr, rest_len);
       case 27: return fuzz_27(rest_ptr, rest_len);
       case 28: return fuzz_28(rest_ptr, rest_len);
+      case 29: return fuzz_29(rest_ptr, rest_len);
+      case 30: return fuzz_30(rest_ptr, rest_len);
+      case 31: return fuzz_31(rest_ptr, rest_len);
+      case 32: return fuzz_32(rest_ptr, rest_len);
+      case 33: return fuzz_33(rest_ptr, rest_len);
+      case 34: return fuzz_34(rest_ptr, rest_len);
+      case 35: return fuzz_35(rest_ptr, rest_len);
+      case 36: return fuzz_36(rest_ptr, rest_len);
+      case 37: return fuzz_37(rest_ptr, rest_len);
+      case 38: return fuzz_38(rest_ptr, rest_len);
+      case 39: return fuzz_39(rest_ptr, rest_len);
+      case 40: return fuzz_40(rest_ptr, rest_len);
+      case 41: return fuzz_41(rest_ptr, rest_len);
+      case 42: return fuzz_42(rest_ptr, rest_len);
+      case 43: return fuzz_43(rest_ptr, rest_len);
+      case 44: return fuzz_44(rest_ptr, rest_len);
+      case 45: return fuzz_45(rest_ptr, rest_len);
+      case 46: return fuzz_46(rest_ptr, rest_len);
+      case 47: return fuzz_47(rest_ptr, rest_len);
+      case 48: return fuzz_48(rest_ptr, rest_len);
+      case 49: return fuzz_49(rest_ptr, rest_len);
+      case 50: return fuzz_50(rest_ptr, rest_len);
+      case 51: return fuzz_51(rest_ptr, rest_len);
+      case 52: return fuzz_52(rest_ptr, rest_len);
+      case 53: return fuzz_53(rest_ptr, rest_len);
+      case 54: return fuzz_54(rest_ptr, rest_len);
     }
 }

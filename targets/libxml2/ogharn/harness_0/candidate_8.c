@@ -11,9 +11,7 @@
 
 int fuzz_8(char* fuzzData, long size) {
    int xmlCtxtReadMemoryvar2 = 1;
-   char* xmlCtxtReadMemoryvar3[size+1];
-	sprintf(xmlCtxtReadMemoryvar3, "/tmp/2prcb");
    xmlParserCtxtPtr xmlNewParserCtxtval1 = xmlNewParserCtxt();
-   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, xmlCtxtReadMemoryvar2, xmlCtxtReadMemoryvar3, fuzzData, size);
+   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, xmlCtxtReadMemoryvar2, "r", fuzzData+size, size);
    return 0;
 }

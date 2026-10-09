@@ -8,12 +8,12 @@
 
 int fuzz_0(char* fuzzData, long size) {
    void* png_image_finish_readvar2[size+1];
-	sprintf(png_image_finish_readvar2, "/tmp/ks5mb");
+	sprintf(png_image_finish_readvar2, "/tmp/a1y2d");
    png_int_32 png_image_finish_readvar3;
 	memset(&png_image_finish_readvar3, 0, sizeof(png_image_finish_readvar3));
 
    void* png_image_finish_readvar4[size+1];
-	sprintf(png_image_finish_readvar4, "/tmp/oq4bm");
+	sprintf(png_image_finish_readvar4, "/tmp/2ctvh");
    png_imagep png_fuzz_new_imageval1 = png_fuzz_new_image();
    int png_image_begin_read_from_memoryval1 = png_image_begin_read_from_memory(png_fuzz_new_imageval1, (void*)fuzzData, size);
 	if((int)png_image_begin_read_from_memoryval1 < 0){

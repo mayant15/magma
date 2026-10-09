@@ -9,11 +9,11 @@
 #include <libxml/globals.h>
 #include <libxml/xmlIO.h>
 
-int fuzz_10(char* fuzzData, long size) {
+int fuzz_12(char* fuzzData, long size) {
    char* xmlCtxtReadMemoryvar3[size+1];
-	sprintf(xmlCtxtReadMemoryvar3, "/tmp/6bn9p");
+	sprintf(xmlCtxtReadMemoryvar3, "/tmp/xgvnv");
    xmlParserCtxtPtr xmlNewParserCtxtval1 = xmlNewParserCtxt();
-   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, XML_DETECT_IDS, xmlCtxtReadMemoryvar3, fuzzData+size, size);
-   xmlFreeDoc(xmlCtxtReadMemoryval1);
+   xmlDocPtr xmlCtxtReadMemoryval1 = xmlCtxtReadMemory(xmlNewParserCtxtval1, fuzzData, size, xmlCtxtReadMemoryvar3, NULL, XML_SAX2_MAGIC);
+   xmlDocPtr xmlCopyDocval1 = xmlCopyDoc(xmlCtxtReadMemoryval1, 1);
    return 0;
 }
