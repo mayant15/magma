@@ -7,9 +7,10 @@
 #include "harness_1/candidate_3.c"
 #include "harness_1/candidate_4.c"
 #include "harness_1/candidate_5.c"
+#include "harness_1/candidate_6.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 6
+#define NUM_CANDIDATES 7
 
 int main(int argc, char *argv[])
 {
@@ -54,5 +55,6 @@ int main(int argc, char *argv[])
       case 3: return fuzz_3(rest_ptr, rest_len);
       case 4: return fuzz_4(rest_ptr, rest_len);
       case 5: return fuzz_5(rest_ptr, rest_len);
+      case 6: return fuzz_6(rest_ptr, rest_len);
     }
 }

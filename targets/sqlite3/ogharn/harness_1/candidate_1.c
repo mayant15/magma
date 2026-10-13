@@ -9,7 +9,6 @@ int fuzz_1(char* fuzzData, long size) {
    sqlite3* sqlite3_openvar1;
 	memset(&sqlite3_openvar1, 0, sizeof(sqlite3_openvar1));
 
-   int sqlite3_prepare_v2var2 = 1;
    sqlite3_stmt* sqlite3_prepare_v2var3;
 	memset(&sqlite3_prepare_v2var3, 0, sizeof(sqlite3_prepare_v2var3));
 
@@ -17,7 +16,7 @@ int fuzz_1(char* fuzzData, long size) {
 	if((int)sqlite3_openval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, &fuzzData, sqlite3_prepare_v2var2, &sqlite3_prepare_v2var3, &fuzzData);
+   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, SQLITE_TESTCTRL_ALWAYS, &sqlite3_prepare_v2var3, NULL);
 	if((int)sqlite3_prepare_v2val1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}

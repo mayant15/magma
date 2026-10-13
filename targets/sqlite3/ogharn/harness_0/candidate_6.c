@@ -16,8 +16,16 @@ int fuzz_6(char* fuzzData, long size) {
 	if((int)sqlite3_openval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, SQLITE_DBCONFIG_TRIGGER_EQP, &sqlite3_prepare_v2var3, NULL);
+   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, size, &sqlite3_prepare_v2var3, NULL);
 	if((int)sqlite3_prepare_v2val1 < 0){
+		fprintf(stderr, "err");
+		exit(0);	}
+   int sqlite3_stepval1 = sqlite3_step(sqlite3_prepare_v2var3);
+	if((int)sqlite3_stepval1 < 0){
+		fprintf(stderr, "err");
+		exit(0);	}
+   int sqlite3_finalizeval1 = sqlite3_finalize(sqlite3_prepare_v2var3);
+	if((int)sqlite3_finalizeval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
    return 0;

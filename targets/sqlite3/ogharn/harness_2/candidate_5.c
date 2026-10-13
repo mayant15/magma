@@ -13,21 +13,13 @@ int fuzz_5(char* fuzzData, long size) {
 	memset(&sqlite3_prepare_v2var3, 0, sizeof(sqlite3_prepare_v2var3));
 
    char** sqlite3_prepare_v2var4[size+1];
-	sprintf(sqlite3_prepare_v2var4, "/tmp/lglzy");
+	sprintf(sqlite3_prepare_v2var4, "/tmp/25vjh");
    int sqlite3_openval1 = sqlite3_open(":memory:", &sqlite3_openvar1);
 	if((int)sqlite3_openval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, SQLITE_FCNTL_TEMPFILENAME, &sqlite3_prepare_v2var3, sqlite3_prepare_v2var4);
+   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, SQLITE_TEXT, &sqlite3_prepare_v2var3, sqlite3_prepare_v2var4);
 	if((int)sqlite3_prepare_v2val1 < 0){
-		fprintf(stderr, "err");
-		exit(0);	}
-   int sqlite3_stepval1 = sqlite3_step(sqlite3_prepare_v2var3);
-	if((int)sqlite3_stepval1 < 0){
-		fprintf(stderr, "err");
-		exit(0);	}
-   int sqlite3_finalizeval1 = sqlite3_finalize(sqlite3_prepare_v2var3);
-	if((int)sqlite3_finalizeval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
    return 0;

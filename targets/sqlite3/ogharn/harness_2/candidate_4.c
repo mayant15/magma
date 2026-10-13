@@ -16,7 +16,7 @@ int fuzz_4(char* fuzzData, long size) {
 	if((int)sqlite3_openval1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
-   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, size, &sqlite3_prepare_v2var3, NULL);
+   int sqlite3_prepare_v2val1 = sqlite3_prepare_v2(sqlite3_openvar1, fuzzData, SQLITE_FCNTL_SIZE_HINT, &sqlite3_prepare_v2var3, NULL);
 	if((int)sqlite3_prepare_v2val1 < 0){
 		fprintf(stderr, "err");
 		exit(0);	}
