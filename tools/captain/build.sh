@@ -9,6 +9,7 @@
 # + env ISAN: if set, build the benchmark with ISAN/fatal canaries (default: unset)
 # + env HARDEN: if set, build the benchmark with hardened canaries (default: unset)
 # + env ARC: if set, build Apptainer containers for ARC instead of Docker (default: unset)
+# + env DOCKER_BUILD_FLAGS: extra flags passed to `docker build`, e.g. --network=host (default: unset)
 ##
 
 if [ -z $FUZZER ] || [ -z $TARGET ]; then
@@ -74,7 +75,7 @@ if [ ! -z $ARC ]; then
   popd
 else
   # TODO(Mayant): Should we pass in GROUP_ID and USER_ID?
-  docker build -t "$IMG_NAME" \
+  docker build $DOCKER_BUILD_FLAGS -t "$IMG_NAME" \
       --build-arg fuzzer_name="$FUZZER" \
       --build-arg target_name="$TARGET" \
       $mode_flag $isan_flag $harden_flag $harness_flag \
