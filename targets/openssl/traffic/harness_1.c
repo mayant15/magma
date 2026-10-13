@@ -2,9 +2,10 @@
 #include <stdio.h>
 
 #include "harness_1/candidate_0.c"
+#include "harness_1/candidate_1.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 1
+#define NUM_CANDIDATES 2
 
 int main(int argc, char* argv[]) {
     FILE *f;
@@ -32,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     if(fread(fuzzData, (size_t)size, 1, f) != 1)
         exit(0);
-    fuzzData[size] = '\\0';
+    fuzzData[size] = '\0';
 
     if (size < INT_SIZE) return 0;
 
@@ -43,5 +44,6 @@ int main(int argc, char* argv[]) {
 
   switch (index % NUM_CANDIDATES) {
     case 0: return fuzz_0(rest_ptr, rest_len);
+    case 1: return fuzz_1(rest_ptr, rest_len);
   }
 }

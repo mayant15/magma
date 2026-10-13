@@ -4,9 +4,12 @@
 #include "harness_base_1/candidate_0.c"
 #include "harness_base_1/candidate_1.c"
 #include "harness_base_1/candidate_2.c"
+#include "harness_base_1/candidate_3.c"
+#include "harness_base_1/candidate_4.c"
+#include "harness_base_1/candidate_5.c"
 
 #define INT_SIZE 4
-#define NUM_CANDIDATES 3
+#define NUM_CANDIDATES 6
 
 int main(int argc, char* argv[]) {
     FILE *f;
@@ -34,7 +37,7 @@ int main(int argc, char* argv[]) {
 
     if(fread(fuzzData, (size_t)size, 1, f) != 1)
         exit(0);
-    fuzzData[size] = '\\0';
+    fuzzData[size] = '\0';
 
     if (size < INT_SIZE) return 0;
 
@@ -47,5 +50,8 @@ int main(int argc, char* argv[]) {
     case 0: return fuzz_0(rest_ptr, rest_len);
     case 1: return fuzz_1(rest_ptr, rest_len);
     case 2: return fuzz_2(rest_ptr, rest_len);
+    case 3: return fuzz_3(rest_ptr, rest_len);
+    case 4: return fuzz_4(rest_ptr, rest_len);
+    case 5: return fuzz_5(rest_ptr, rest_len);
   }
 }
