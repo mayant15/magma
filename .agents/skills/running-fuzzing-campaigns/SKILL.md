@@ -2,7 +2,7 @@
 name: running-fuzzing-campaigns
 description: >-
   Builds and runs Magma ground-truth fuzzing campaigns using the captain
-  toolset, collects results with exp2json.py, and checks for missing logs.
+  toolset, collects results with exp2json, and checks for missing logs.
   Use when asked to run fuzzers, build targets, start campaigns, produce
   experiment JSON, or diagnose missing campaign data.
 ---
@@ -12,7 +12,8 @@ description: >-
 Magma is a ground-truth fuzzing benchmark: real libraries with front-ported
 bugs and source-level canary instrumentation. The `captain` toolset (in
 `tools/captain/`) orchestrates Docker-based builds and campaign execution.
-`exp2json.py` (in `tools/benchd/`) collects monitor dumps into a JSON summary.
+`exp2json` (in `tools/benchd/exp2json/`, a Rust binary) collects monitor
+dumps into a JSON summary.
 
 ## Key Files
 
@@ -23,7 +24,7 @@ bugs and source-level canary instrumentation. The `captain` toolset (in
 - `tools/captain/start.sh` — starts a single campaign container
 - `tools/captain/common.sh` — shared helpers, loads target `configrc` defaults
 - `magma/run.sh` — in-container entrypoint; runs fuzzer + monitor loop
-- `tools/benchd/exp2json.py` — collects monitor data from workdir into JSON
+- `tools/benchd/exp2json/` — Rust tool; collects monitor data from workdir into JSON
 - `tools/bugcount.py` — prints reached/triggered bug counts from JSON
 
 ## captainrc Configuration
@@ -107,7 +108,7 @@ aflplusplus_TARGETS=(libpng openssl libsndfile libtiff libxml2 lua sqlite3)
 ```
 
 `NO_ARCHIVE=1` is recommended for short runs — it skips tarballing so
-`exp2json.py` can read monitor dumps directly from the `ar/` directory.
+`exp2json` can read monitor dumps directly from the `ar/` directory.
 
 ### 2. Build and run
 
@@ -125,16 +126,31 @@ cd /home/user/workspace/repo/tools/captain
 5. Container logs go to `WORKDIR/log/<fuzzer>_<target>_<program>_<run>_container.log`
 6. Build logs go to `WORKDIR/log/<fuzzer>_<target>_build.log`
 
-### 3. Collect results with exp2json.py
+### 3. Collect results with exp2json
 
 ```bash
-python3 tools/benchd/exp2json.py ./workdir -o results.json -v
+nix develop -c bash -c '
+  cd tools/benchd/exp2json
+  cargo run --release -- ../../../workdir ../../../results.json
+'
 ```
 
+(Or, if already built: `tools/benchd/exp2json/target/release/exp2json ./workdir results.json`.)
+
 - `./workdir` is the same `WORKDIR` from captainrc
-- `-v` prints info (including warnings about campaigns with no monitor logs)
-- `-vv` prints debug-level detail
-- Output JSON structure: `{"results": {<fuzzer>: {<target>: {<program>: {<run>: {"reached": {...}, "triggered": {...}}}}}}}`
+- Info-level messages (including warnings about campaigns with no monitor
+  logs) print by default; pass `-q`/`--quiet` to drop to warnings-and-errors
+  only, or `-qq` for errors only
+- By default, `exp2json` only reads the most recent monitor dump per run
+  (canary counters are cumulative, so the latest dump already reflects every
+  bug ever reached/triggered) — fast even on huge campaigns, output is
+  `{"results": {<fuzzer>: {<target>: {<program>: {<run>: {"reached": [...], "triggered": [...]}}}}}}`
+  (sorted bug-name arrays, no timestamps)
+- Pass `--time-to-bug` to instead scan every monitor dump and record each
+  bug's first-reached/first-triggered timestamp — much slower on campaigns
+  with many dump files, since it's reading every cold file on disk instead
+  of just one. Output then matches the original Python script's shape:
+  `{"reached": {<bug>: <timestamp>, ...}, "triggered": {...}}`
 
 ### 4. Summarize bug counts
 
@@ -152,7 +168,7 @@ After a campaign run, check completeness:
    be `REPEAT` numbered directories (0, 1, ..., REPEAT-1) under
    `workdir/ar/<fuzzer>/<target>/<program>/`.
 
-2. **Missing monitor data**: Run `exp2json.py -v` and look for warnings:
+2. **Missing monitor data**: Run `exp2json` and look for warnings:
    - `"<fuzzer>/<target>/<program>/<run> contains no monitor logs"` — the
      campaign ran but produced no monitor dumps. Check the corresponding
      container log at `workdir/log/<fuzzer>_<target>_<program>_<run>_container.log`.
@@ -192,12 +208,12 @@ workdir/
 ├── cache/               # In-memory tmpfs (or disk) working area
 ├── log/                 # Container and build logs
 ├── poc/                 # Proof-of-concept crash files (if POC_EXTRACT)
-├── lock/                # Mutex/worker lock files
-└── tmp/                 # exp2json.py temporary extraction directory
+└── lock/                # Mutex/worker lock files
 ```
 
 When `NO_ARCHIVE` is unset, each run directory contains `ball.tar` instead
-of raw files. `exp2json.py` handles both cases.
+of raw files. `exp2json` handles both cases, reading the tarball's monitor
+dumps directly in memory without extracting to disk.
 
 ## Orb / Sandbox Notes
 

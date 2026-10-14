@@ -18,6 +18,8 @@
                 pandas
                 numpy
               ]))
+              pkgs.cargo
+              pkgs.rustc
             ];
           };
         }
