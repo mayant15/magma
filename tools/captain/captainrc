@@ -9,11 +9,11 @@ WORKERS=8
 NO_ARCHIVE=1
 CACHE_ON_DISK=1
 
-FUZZERS=(aflplusplus)
+# CANARY_MODE=3
 
-aflplusplus_TARGETS=(libxml2 libsndfile libtiff libpng openssl lua sqlite3)
+aflplusplus_TARGETS=(libtiff libxml2 libpng libsndfile sqlite3 openssl)
 
-# aflplusplus_HARNESSES=(traffic)
-aflplusplus_HARNESSES=(ogharn)
+aflplusplus_HARNESSES=(traffic)
+# aflplusplus_HARNESSES=(ogharn)
 
 aflplusplus_HARNESS_ARGS="@@"
