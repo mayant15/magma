@@ -45,6 +45,10 @@ if [ ! -z "$HARNESSES" ]; then
     exit 1
   fi
 
+  if [ -f "$HARNESS_DIR/build.sh" ]; then
+    # harness-specific recipe (see README: "Adding Custom Harnesses")
+    source "$HARNESS_DIR/build.sh"
+  else
   RAW_CC="clang"
 
   SUPPORT="$TARGET/$HARNESSES/support"
@@ -64,5 +68,6 @@ if [ ! -z "$HARNESSES" ]; then
       -o "$OUT/$NAME" -pthread -ldl -lm \
       $LDFLAGS $LIBS
   done
+  fi
 fi
 
